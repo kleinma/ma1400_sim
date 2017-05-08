@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<robot name="MA1400" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="ma1400" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!-- Constants for robot dimensions -->
   <xacro:property name="PI" value="3.1415926535897931"/>
   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
-  <xacro:include filename="$(find ma1400_sim)/urdf/MA1400.gazebo" />
+  <xacro:include filename="$(find ma1400_sim)/urdf/ma1400.gazebo" />
 
   <link name="world" />
   <link
