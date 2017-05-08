@@ -26,7 +26,7 @@
     args="-urdf -model ma1400 -param robot_description"/>
 
     <!-- Spawn joint controllers -->
-  <rosparam command="load" file="$(find ma1400_sim)/launch/control_params.yaml"/>
+  <rosparam command="load" file="$(find ma1400_sim)/launch/ma1400_control_params.yaml"/>
   <node name="controller_spawner" pkg="controller_manager" type="spawner"
         respawn="false" output="screen" ns="/ma1400"
         args="joint_state_controller
@@ -36,6 +36,12 @@
               u2r_controller
               r2b_controller
               b2t_controller" />
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+        type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/ma1400/joint_states" />
+  </node>
 
   <!-- Not sure what this does -->
   <node
