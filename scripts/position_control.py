@@ -28,17 +28,17 @@ import math
 
 if __name__ == "__main__":
   rospy.init_node('position_control')
-  base2s_pub = rospy.Publisher('/ma1400_base2s_controller/command', Float64,
+  base2s_pub = rospy.Publisher('/ma1400/base2s_controller/command', Float64,
                                queue_size=1)
-  s2l_pub = rospy.Publisher('/ma1400_s2l_controller/command', Float64,
+  s2l_pub = rospy.Publisher('/ma1400/s2l_controller/command', Float64,
                                queue_size=1)
-  l2u_pub = rospy.Publisher('/ma1400_l2u_controller/command', Float64,
+  l2u_pub = rospy.Publisher('/ma1400/l2u_controller/command', Float64,
                                queue_size=1)
-  u2r_pub = rospy.Publisher('/ma1400_u2r_controller/command', Float64,
+  u2r_pub = rospy.Publisher('/ma1400/u2r_controller/command', Float64,
                                queue_size=1)
-  r2b_pub = rospy.Publisher('/ma1400_r2b_controller/command', Float64,
+  r2b_pub = rospy.Publisher('/ma1400/r2b_controller/command', Float64,
                                queue_size=1)
-  b2t_pub = rospy.Publisher('/ma1400_b2t_controller/command', Float64,
+  b2t_pub = rospy.Publisher('/ma1400/b2t_controller/command', Float64,
                                queue_size=1)
   base2s_pos = Float64()
   s2l_pos = Float64()

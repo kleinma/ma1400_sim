@@ -28,14 +28,14 @@
     <!-- Spawn joint controllers -->
   <rosparam command="load" file="$(find ma1400_sim)/launch/control_params.yaml"/>
   <node name="controller_spawner" pkg="controller_manager" type="spawner"
-        respawn="false" output="screen"
-        args="ma1400_joint_state_controller
-              ma1400_base2s_controller
-              ma1400_s2l_controller
-              ma1400_l2u_controller
-              ma1400_u2r_controller
-              ma1400_r2b_controller
-              ma1400_b2t_controller" />
+        respawn="false" output="screen" ns="/ma1400"
+        args="joint_state_controller
+              base2s_controller
+              s2l_controller
+              l2u_controller
+              u2r_controller
+              r2b_controller
+              b2t_controller" />
 
   <!-- Not sure what this does -->
   <node
