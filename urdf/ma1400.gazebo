@@ -11,50 +11,48 @@
 
   <!-- base_link -->
   <gazebo reference="base_link">
-    <mu1>20</mu1>
-    <mu2>20</mu2>
     <material>Gazebo/Blue</material>
   </gazebo>
 
   <!-- s_link -->
   <gazebo reference="s_link">
-    <mu1>20</mu1>
-    <mu2>20</mu2>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
     <material>Gazebo/Blue</material>
   </gazebo>
 
   <!-- l_link -->
   <gazebo reference="l_link">
-    <mu1>20</mu1>
-    <mu2>20</mu2>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
     <material>Gazebo/Blue</material>
   </gazebo>
 
   <!-- u_link -->
   <gazebo reference="u_link">
-    <mu1>20</mu1>
-    <mu2>20</mu2>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
     <material>Gazebo/Blue</material>
   </gazebo>
 
   <!-- r_link -->
   <gazebo reference="r_link">
-    <mu1>20</mu1>
-    <mu2>20</mu2>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
     <material>Gazebo/Blue</material>
   </gazebo>
 
   <!-- b_link -->
   <gazebo reference="b_link">
-    <mu1>20</mu1>
-    <mu2>20</mu2>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
     <material>Gazebo/Blue</material>
   </gazebo>
 
   <!-- t_link -->
   <gazebo reference="t_link">
-    <mu1>20</mu1>
-    <mu2>20</mu2>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
     <material>Gazebo/Blue</material>
   </gazebo>
 

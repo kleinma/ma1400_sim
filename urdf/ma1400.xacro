@@ -6,6 +6,7 @@
   <xacro:include filename="$(find ma1400_sim)/urdf/ma1400.gazebo" />
 
   <link name="world" />
+
   <link
     name="base_link">
     <inertial>
@@ -46,6 +47,26 @@
       </geometry>
     </collision>
   </link>
+
+  <joint
+    name="world2base"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 -1.57079632679 0" />
+    <parent
+      link="world" />
+    <child
+      link="base_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+
   <link
     name="s_link">
     <inertial>
@@ -97,24 +118,7 @@
       </geometry>
     </collision>
   </link>
-  <joint
-    name="world2base"
-    type="revolute">
-    <origin
-      xyz="0 0 0"
-      rpy="0 -1.57079632679 0" />
-    <parent
-      link="world" />
-    <child
-      link="base_link" />
-    <axis
-      xyz="0 0 1" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="0"
-      velocity="0" />
-  </joint>
+
   <joint
     name="base2s"
     type="revolute">
@@ -132,7 +136,10 @@
       upper="2.9671"
       effort="0"
       velocity="3.8397" />
+    <dynamics
+      damping="0.7" />
   </joint>
+
   <link
     name="l_link">
     <inertial>
@@ -173,6 +180,7 @@
       </geometry>
     </collision>
   </link>
+
   <joint
     name="s2l"
     type="revolute">
@@ -190,7 +198,10 @@
       upper="2.70526"
       effort="0"
       velocity="3.49066" />
+    <dynamics
+      damping="1.7" />
   </joint>
+
   <link
     name="u_link">
     <inertial>
@@ -231,6 +242,7 @@
       </geometry>
     </collision>
   </link>
+
   <joint
     name="l2u"
     type="revolute">
@@ -248,7 +260,10 @@
       upper="3.05433"
       effort="0"
       velocity="3.83972" />
+    <dynamics
+      damping="1.7" />
   </joint>
+
   <link
     name="r_link">
     <inertial>
@@ -289,6 +304,7 @@
       </geometry>
     </collision>
   </link>
+
   <joint
     name="u2r"
     type="revolute">
@@ -306,7 +322,10 @@
       upper="2.61799"
       effort="14"
       velocity="3.22886" />
+    <dynamics
+      damping="1.7" />
   </joint>
+
   <link
     name="b_link">
     <inertial>
@@ -347,6 +366,7 @@
       </geometry>
     </collision>
   </link>
+
   <joint
     name="r2b"
     type="revolute">
@@ -364,7 +384,10 @@
       upper="3.14159"
       effort="14"
       velocity="2.86234" />
+    <dynamics
+      damping="1.7" />
   </joint>
+
   <link
     name="t_link">
     <inertial>
@@ -405,6 +428,7 @@
       </geometry>
     </collision>
   </link>
+
   <joint
     name="b2t"
     type="revolute">
@@ -422,7 +446,9 @@
       upper="3.49066"
       effort="0.98"
       velocity="10.6465" />
-  </joint>
+  <dynamics
+      damping="0.7" />
+</joint>
 
   <transmission name="base2s_trans">
     <type>transmission_interface/SimpleTransmission</type>
