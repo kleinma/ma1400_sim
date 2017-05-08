@@ -1,6 +1,4 @@
 <launch>
-  <!-- Spawn joint controllers -->
-  <rosparam command="load" file="$(find ma1400_sim)/launch/control_params.yaml"/>
   <!-- Load an empty gazebo world -->
   <include
     file="$(find gazebo_ros)/launch/empty_world.launch" />
@@ -17,6 +15,10 @@
     <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
     args="-urdf -model MA1400 -param robot_description"/>
+
+    <!-- Spawn joint controllers -->
+  <rosparam command="load" file="$(find ma1400_sim)/launch/control_params.yaml"/>
+  <node name="control_spawner" pkg="controller_manager" type="spawner" output="screen" args="ma1400_joint_state_controller ma1400_base2s_controller ma1400_s2l_controller ma1400_l2u_controller ma1400_u2r_controller ma1400_r2b_controller ma1400_b2t_controller" />
 
   <!-- Not sure what this does -->
   <node
