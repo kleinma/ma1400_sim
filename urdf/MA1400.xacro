@@ -1,5 +1,10 @@
-<robot
-  name="MA1400">
+<?xml version="1.0"?>
+<robot name="MA1400" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <xacro:include filename="$(find ma1400_sim)/urdf/MA1400.gazebo" />
+
   <link name="world" />
   <link
     name="base_link">
@@ -428,4 +433,55 @@
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
+
+  <transmission name="s2l_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="$s2l_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="s2l">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <transmission name="l2u_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="$l2u_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="l2u">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <transmission name="u2r_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="$u2r_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="u2r">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <transmission name="r2b_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="$r2b_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="r2b">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <transmission name="b2t_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="$b2t_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="b2t">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
 </robot>

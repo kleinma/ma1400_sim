@@ -1,0 +1,27 @@
+ma1400_joint_state_controller:
+  type: "joint_state_controller/JointStateController"
+  publish_rate: 50
+
+ma1400_base2s_controller:
+  type: "position_controllers/JointPositionController"
+  joint: base2s
+
+ma1400_s2l_controller:
+  type: "position_controllers/JointPositionController"
+  joint: s2l
+
+ma1400_l2u_controller:
+  type: "position_controllers/JointPositionController"
+  joint: l2u
+
+ma1400_u2r_controller:
+  type: "position_controllers/JointPositionController"
+  joint: u2r
+
+ma1400_r2b_controller:
+  type: "position_controllers/JointPositionController"
+  joint: r2b
+
+ma1400_b2t_controller:
+  type: "position_controllers/JointPositionController"
+  joint: b2t

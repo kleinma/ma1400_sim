@@ -1,4 +1,7 @@
 <launch>
+  <!-- Spawn joint controllers -->
+  <rosparam command="load" file="$(find ma1400_sim)/launch/control_params.yaml"/>
+  <!-- Load an empty gazebo world -->
   <include
     file="$(find gazebo_ros)/launch/empty_world.launch" />
   <node
@@ -6,12 +9,16 @@
     pkg="tf"
     type="static_transform_publisher"
     args="0 0 0 0 1.57079632679 0 map base_link 40" />
-  <node
-    name="spawn_model"
-    pkg="gazebo_ros"
-    type="spawn_model"
-    args="-file $(find ma1400_sim)/urdf/MA1400.urdf -urdf -model MA1400"
-    output="screen" />
+
+    <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro --inorder '$(find ma1400_sim)/urdf/MA1400.xacro'" />
+
+    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model MA1400 -param robot_description"/>
+
+  <!-- Not sure what this does -->
   <node
     name="fake_joint_calibration"
     pkg="rostopic"
