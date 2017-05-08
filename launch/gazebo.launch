@@ -1,24 +1,41 @@
 <launch>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
   <!-- Load an empty gazebo world -->
-  <include
-    file="$(find gazebo_ros)/launch/empty_world.launch" />
-  <node
-    name="tf_base_map"
-    pkg="tf"
-    type="static_transform_publisher"
-    args="0 0 0 0 1.57079632679 0 map base_link 40" />
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!--arg name="world_name" value="$(find abby_gazebo)/worlds/abby.world"/-->
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
 
     <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description"
-    command="$(find xacro)/xacro --inorder '$(find ma1400_sim)/urdf/MA1400.xacro'" />
+    command="$(find xacro)/xacro --inorder '$(find ma1400_sim)/urdf/ma1400.xacro'" />
 
     <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-    args="-urdf -model MA1400 -param robot_description"/>
+    args="-urdf -model ma1400 -param robot_description"/>
 
     <!-- Spawn joint controllers -->
   <rosparam command="load" file="$(find ma1400_sim)/launch/control_params.yaml"/>
-  <node name="control_spawner" pkg="controller_manager" type="spawner" output="screen" args="ma1400_joint_state_controller ma1400_base2s_controller ma1400_s2l_controller ma1400_l2u_controller ma1400_u2r_controller ma1400_r2b_controller ma1400_b2t_controller" />
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        respawn="false" output="screen"
+        args="ma1400_joint_state_controller
+              ma1400_base2s_controller
+              ma1400_s2l_controller
+              ma1400_l2u_controller
+              ma1400_u2r_controller
+              ma1400_r2b_controller
+              ma1400_b2t_controller" />
 
   <!-- Not sure what this does -->
   <node
