@@ -4,9 +4,9 @@
   <arg
     name="gui"
     default="True" />
-  <param
-    name="robot_description"
-    textfile="$(find ma1400_sim)/urdf/MA1400.urdf" />
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro --inorder '$(find ma1400_sim)/urdf/ma1400.xacro'" />
   <param
     name="use_gui"
     value="$(arg gui)" />
