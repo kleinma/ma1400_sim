@@ -120,7 +120,7 @@
   </link>
 
   <joint
-    name="base2s"
+    name="joint_s"
     type="revolute">
     <origin
       xyz="0.0875 0 0"
@@ -182,7 +182,7 @@
   </link>
 
   <joint
-    name="s2l"
+    name="joint_l"
     type="revolute">
     <origin
       xyz="0.3705 -0.0655 -0.15"
@@ -244,7 +244,7 @@
   </link>
 
   <joint
-    name="l2u"
+    name="joint_u"
     type="revolute">
     <origin
       xyz="0.0445 0.614 0"
@@ -306,7 +306,7 @@
   </link>
 
   <joint
-    name="u2r"
+    name="joint_r"
     type="revolute">
     <origin
       xyz="0.109 -0.2 -0.069"
@@ -368,7 +368,7 @@
   </link>
 
   <joint
-    name="r2b"
+    name="joint_b"
     type="revolute">
     <origin
       xyz="0.571 0.07 0"
@@ -430,7 +430,7 @@
   </link>
 
   <joint
-    name="b2t"
+    name="joint_t"
     type="revolute">
     <origin
       xyz="0.07 0.1265 0.03"
@@ -450,62 +450,62 @@
       damping="0.7" />
 </joint>
 
-  <transmission name="base2s_trans">
+  <transmission name="s_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="$base2s_motor">
+    <actuator name="$s_motor">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="base2s">
+    <joint name="joint_s">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
-  <transmission name="s2l_trans">
+  <transmission name="l_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="$s2l_motor">
+    <actuator name="$l_motor">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="s2l">
+    <joint name="joint_l">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
-  <transmission name="l2u_trans">
+  <transmission name="u_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="$l2u_motor">
+    <actuator name="$u_motor">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="l2u">
+    <joint name="joint_u">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
-  <transmission name="u2r_trans">
+  <transmission name="r_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="$u2r_motor">
+    <actuator name="$r_motor">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="u2r">
+    <joint name="joint_r">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
-  <transmission name="r2b_trans">
+  <transmission name="b_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="$r2b_motor">
+    <actuator name="$b_motor">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="r2b">
+    <joint name="joint_b">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
-  <transmission name="b2t_trans">
+  <transmission name="t_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="$b2t_motor">
+    <actuator name="$t_motor">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="b2t">
+    <joint name="joint_t">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>

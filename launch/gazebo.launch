@@ -30,12 +30,12 @@
   <node name="controller_spawner" pkg="controller_manager" type="spawner"
         respawn="false" output="screen" ns="/ma1400"
         args="joint_state_controller
-              base2s_controller
-              s2l_controller
-              l2u_controller
-              u2r_controller
-              r2b_controller
-              b2t_controller" />
+              joint_s_controller
+              joint_l_controller
+              joint_u_controller
+              joint_r_controller
+              joint_b_controller
+              joint_t_controller" />
 
   <!-- convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher"
