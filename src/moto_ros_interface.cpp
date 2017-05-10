@@ -1,3 +1,4 @@
+
 /******************************************************************************
 moto_ros_interface.cpp
 The MotoRosNode Class provides an interface between the ROS's JointTrajectory
@@ -31,19 +32,75 @@ SOFTWARE.
 #include <trajectory_msgs/JointTrajectory.h>
 #include <trajectory_msgs/JointTrajectoryPoint.h>
 #include <std_msgs/Float64.h>
+#include <std_msgs/String.h>
 #include "ma1400_sim/moto_ros_interface.h"
 #include <vector>
+#include <algorithm>
+#include <string>
 
-// When a JointTrajectory message is recieve, currently, iterate through the
+// When a JointTrajectory message is recieved, currently, iterate through the
 // points at the desired speed. Do not implement smooth interpolation, yet.
 void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& msg) {
+  ROS_INFO_STREAM(*msg);
+
+  // Create a vector that contains the standard order of the joint_names
+  std::vector<std::string> jointNamesStdOrder;
+  jointNamesStdOrder.push_back("joint_s");
+  jointNamesStdOrder.push_back("joint_l");
+  jointNamesStdOrder.push_back("joint_u");
+  jointNamesStdOrder.push_back("joint_r");
+  jointNamesStdOrder.push_back("joint_b");
+  jointNamesStdOrder.push_back("joint_t");
+
+  // iterate over the joint names
+  std::vector<int> indicies;
+  int j = 0;
+  for(std::vector<std::string>::const_iterator it =
+        jointNamesStdOrder.begin(); it != jointNamesStdOrder.end(); it++)
+    {
+      // look in msg->joint_names and see at which indicie that name exists
+      // **currently no check for a missing name**
+      indicies.push_back(std::find(msg->joint_names.begin(),
+                                   msg->joint_names.end(),
+                                   *it)
+                         - msg->joint_names.begin());
+      j++;
+    }
+
+  // DEBUG
+  for(std::vector<int>::const_iterator it = indicies.begin(); it != indicies.end(); it++)
+    {
+      ROS_DEBUG_STREAM("joint order in message:");
+      ROS_DEBUG_STREAM(*it);
+    }
+
+  // Record when the message is received
+  ros::Duration timeSinceLast = ros::Duration(0);
+  // Iterate through each JointTrajectoryPoint
   int i = 0;
   for(std::vector<trajectory_msgs::JointTrajectoryPoint>::const_iterator it =
-        msg->points.begin(); it!= msg->points.end(); it++)
+        msg->points.begin(); it != msg->points.end(); it++)
     {
       trajectory_msgs::JointTrajectoryPoint pnt;
       pnt = *it;
-      ROS_INFO_STREAM(pnt);
+      timeSinceLast = pnt.time_from_start - timeSinceLast;
+      timeSinceLast.sleep();
+      // Command joints to position in pnt->positions[indicies[n]];
+      std_msgs::Float64 command;
+      command.data = pnt.positions[indicies[0]];
+      joint_sPub_.publish(command);
+      command.data = pnt.positions[indicies[1]];
+      joint_lPub_.publish(command);
+      command.data = pnt.positions[indicies[2]];
+      joint_uPub_.publish(command);
+      command.data = pnt.positions[indicies[3]];
+      joint_rPub_.publish(command);
+      command.data = pnt.positions[indicies[4]];
+      joint_bPub_.publish(command);
+      command.data = pnt.positions[indicies[5]];
+      joint_tPub_.publish(command);
+      ROS_INFO_STREAM("i = " << i << ", time = " << ros::Time::now().toSec());
+      i++;
     }
 }
 
