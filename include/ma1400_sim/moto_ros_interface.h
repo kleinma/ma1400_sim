@@ -29,7 +29,6 @@ SOFTWARE.
 ******************************************************************************/
 #include <ros/ros.h>
 #include <trajectory_msgs/JointTrajectory.h>
-#include <std_msgs/Float64.h>
 
 #ifndef __MOTO_ROS_INTERFACE_H_INCLUDED__
 #define __MOTO_ROS_INTERFACE_H_INCLUDED__
@@ -39,10 +38,15 @@ class MotoRosNode {
  private:
   ros::NodeHandle public_nh_;
   ros::NodeHandle private_nh_;
-  ros::Publisher base2sPub_;
+  ros::Publisher joint_sPub_;
+  ros::Publisher joint_lPub_;
+  ros::Publisher joint_uPub_;
+  ros::Publisher joint_rPub_;
+  ros::Publisher joint_bPub_;
+  ros::Publisher joint_tPub_;
   ros::Subscriber trajSub_;
 
-  void trajSubCB(const trajectory_msgs::JointTrajectory& msg);
+  void trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& msg);
 
  public:
   MotoRosNode();

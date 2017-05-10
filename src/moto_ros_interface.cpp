@@ -29,16 +29,37 @@ SOFTWARE.
 ******************************************************************************/
 #include <ros/ros.h>
 #include <trajectory_msgs/JointTrajectory.h>
+#include <trajectory_msgs/JointTrajectoryPoint.h>
 #include <std_msgs/Float64.h>
 #include "ma1400_sim/moto_ros_interface.h"
+#include <vector>
 
-void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory& msg) {
-  ROS_INFO_STREAM(msg.header.stamp);
+// When a JointTrajectory message is recieve, currently, iterate through the
+// points at the desired speed. Do not implement smooth interpolation, yet.
+void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& msg) {
+  int i = 0;
+  for(std::vector<trajectory_msgs::JointTrajectoryPoint>::const_iterator it =
+        msg->points.begin(); it!= msg->points.end(); it++)
+    {
+      trajectory_msgs::JointTrajectoryPoint pnt;
+      pnt = *it;
+      ROS_INFO_STREAM(pnt);
+    }
 }
 
+/*Constructor */
 MotoRosNode::MotoRosNode(): private_nh_("~") {
-  base2sPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/base2s_controller/command",1);
-  trajSub_ = public_nh_.subscribe("ma1400/trajectory",10,&MotoRosNode::trajSubCB, this);
+
+  // Create publisher to send commands to ros_control controllers
+  joint_sPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_s_controller/command",1);
+  joint_lPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_l_controller/command",1);
+  joint_uPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_u_controller/command",1);
+  joint_rPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_r_controller/command",1);
+  joint_bPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_b_controller/command",1);
+  joint_tPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_t_controller/command",1);
+
+  // Create a subscriber to receive the JointTrajectory message
+  trajSub_ = public_nh_.subscribe("ma1400/joint_path_command",10,&MotoRosNode::trajSubCB, this);
 }
 
 /* Destructor */
