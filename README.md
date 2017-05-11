@@ -24,6 +24,23 @@ At this point, the user must manually change some parts of the URDF. First, the 
 
 At this point, the simulated robot can be viewed inside rviz. However, a few more things must be defined before it is ready for simulation in Gazebo. This [tutorial](http://gazebosim.org/tutorials/?tut=ros_urdf) describes how to add specific Gazebo elements such as material (for color) and friction.
 
-## Position control using ros_control
+## Control
+
+### Low level position control using ros_control
 
 A low level position, velocity, or effort controller can be applied at each joint using the [ros_control](http://wiki.ros.org/ros_control) package. In order to do this several more things must be defined in the URDF or xacro file, including [transmissions](http://wiki.ros.org/urdf/XML/Transmission), and a Gazebo plugin. A /*.yaml file is also necessary to configure the controller and launch files are necessary to get everything started. Great tutorials on setting all of this up can be found [here](http://wiki.ros.org/urdf/Tutorials/Using%20a%20URDF%20in%20Gazebo) and [here](http://gazebosim.org/tutorials/?tut=ros_control).
+
+### Trajectory controller simulator and interface
+
+The [Motoplus-ROS Incremental Motion interface](http://wiki.ros.org/motoman_driver?action=AttachFile&do=get&target=MotoRos_EDS.pdf) defines the reaction of the controller in response to a `trajectory_msgs\JointTrajectory` message. The controller should interpolate between.
+
+## Run a demo
+
+First boot up the gazebo simulation and MotoRos interface simulator
+```
+roslaunch ma1400_sim gazebo.launch
+```
+Then run the simple trajectory controller
+```
+rosrun ma1400_sim trajectory_control.py
+```
