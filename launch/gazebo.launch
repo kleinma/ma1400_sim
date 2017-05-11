@@ -43,6 +43,10 @@
     <remap from="/joint_states" to="/ma1400/joint_states" />
   </node>
 
+  <!-- run the motoros interface simulator -->
+  <node name="moto_ros_interface" pkg="ma1400_sim" type="moto_ros_interface"
+        output="screen"/>
+  
   <!-- Not sure what this does -->
   <node
     name="fake_joint_calibration"
