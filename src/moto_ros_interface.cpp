@@ -76,6 +76,7 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
 
   // Record when the message is received
   ros::Duration timeSinceLast = ros::Duration(0);
+  ros::Duration last_time_from_start = ros::Duration(0);
   // Iterate through each JointTrajectoryPoint
   int i = 0;
   for(std::vector<trajectory_msgs::JointTrajectoryPoint>::const_iterator it =
@@ -83,8 +84,10 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
     {
       trajectory_msgs::JointTrajectoryPoint pnt;
       pnt = *it;
-      timeSinceLast = pnt.time_from_start - timeSinceLast;
+      timeSinceLast = pnt.time_from_start - last_time_from_start;
+      last_time_from_start = pnt.time_from_start;
       timeSinceLast.sleep();
+      ROS_INFO_STREAM(timeSinceLast);
       // Command joints to position in pnt->positions[indicies[n]];
       std_msgs::Float64 command;
       command.data = pnt.positions[indicies[0]];
