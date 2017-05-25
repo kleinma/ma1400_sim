@@ -204,7 +204,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://ma1400_sim/meshes/${name}_link.stl" />
+          <mesh filename="package://ma1400_sim/meshes/ma1400/${name}_link.stl" />
         </geometry>
         <material name="Cast Carbon Steal">
           <color rgba="0.52941 0.54902 0.54902 1" />
@@ -213,7 +213,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://ma1400_sim/meshes/${name}_link.stl" />
+          <mesh filename="package://ma1400_sim/meshes/ma1400/${name}_link.stl" />
         </geometry>
       </collision>
     </link>
