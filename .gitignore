@@ -1,0 +1,5 @@
+# Emacs
+.#*
+
+# Don't make proprietary muffler models public
+meshes/muffler*/
