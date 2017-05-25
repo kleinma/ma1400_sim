@@ -1,0 +1,349 @@
+<?xml version="1.0"?>
+<robot name="ma1400" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="M_PI" value="3.1415926535897931"/>
+  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <xacro:include filename="$(find ma1400_sim)/urdf/ma1400.gazebo.xacro" />
+  <!-- Import trasnmission macro -->
+  <xacro:include filename="$(find ma1400_sim)/urdf/ma1400.transmission.xacro"/>
+
+  <!-- Parameters for each joint and link -->
+  <!-- joint: joint_base = world -> base_link -->
+  <property name="base_name"       value="base" />
+  <property name="base_type"       value="revolute" />
+  <property name="base_origin_xyz" value="0 0 0" />
+  <property name="base_origin_rpy" value="0 ${-M_PI/2} 0" />
+  <property name="base_parent"     value="world" />
+  <property name="base_child"      value="base_link" />
+  <property name="base_axis_xyz"   value="0 0 1" />
+  <property name="base_lower"      value="0" />
+  <property name="base_upper"      value="0" />
+  <property name="base_effort"     value="0" />
+  <property name="base_velocity"   value="0" />
+  <property name="base_damping"    value="0.7" />
+
+  <!-- link: base_link -->
+  <property name="base_xyz"  value="0.0659 0.0031108 0.04815" />
+  <property name="base_rpy"  value="0 0 0" />
+  <property name="base_mass" value="22.072" />
+  <property name="base_ixx"  value="0.50652" />
+  <property name="base_ixy"  value="-0.0073335" />
+  <property name="base_ixz"  value="-0.028252" />
+  <property name="base_iyy"  value="0.36205" />
+  <property name="base_iyz"  value="-0.010806" />
+  <property name="base_izz"  value="0.24865" />
+
+  <!-- joint: joint_s = base_link -> s_link -->
+  <property name="s_name"       value="s" />
+  <property name="s_type"       value="revolute" />
+  <property name="s_origin_xyz" value="0 0.0875 0" />
+  <property name="s_origin_rpy" value="0 0 0" />
+  <property name="s_parent"     value="base_link" />
+  <property name="s_child"      value="s_link" />
+  <property name="s_axis_xyz"   value="1 0 0" />
+  <property name="s_lower"      value="${-170*M_PI/180}" />
+  <property name="s_upper"      value="${170*M_PI/180}" />
+  <property name="s_effort"     value="0" />
+  <property name="s_velocity"   value="${220*M_PI/180}" />
+  <property name="s_damping"    value="0.7" />
+
+  <!-- link: s_link -->
+  <property name="s_xyz"  value="0.062654 -0.0075772 -0.0043747" />
+  <property name="s_rpy"  value="0 0 0" />
+  <property name="s_mass" value="22.072" />
+  <property name="s_ixx"  value="0.50652" />
+  <property name="s_ixy"  value="-0.0073335" />
+  <property name="s_ixz"  value="-0.028252" />
+  <property name="s_iyy"  value="0.36205" />
+  <property name="s_iyz"  value="-0.010806" />
+  <property name="s_izz"  value="0.24865" />
+
+  <!-- joint: joint_l = s_link -> l_link -->
+  <property name="l_name"       value="l" />
+  <property name="l_type"       value="revolute" />
+  <property name="l_origin_xyz" value="0.3705 -0.0655 -0.15" />
+  <property name="l_origin_rpy" value="-9.0409E-17 0 -1.5708" />
+  <property name="l_parent"     value="s_link" />
+  <property name="l_child"      value="l_link" />
+  <property name="l_axis_xyz"   value="-1 0 0" />
+  <property name="l_lower"      value="${-M_PI/2}" />
+  <property name="l_upper"      value="${170*M_PI/180}" />
+  <property name="l_effort"     value="0" />
+  <property name="l_velocity"   value="${220*M_PI/180}" />
+  <property name="l_damping"    value="1.7" />
+
+  <!-- link: l_link -->
+  <property name="l_xyz"  value="0.069501 0.26438 -9.7345E-05" />
+  <property name="l_rpy"  value="0 0 0" />
+  <property name="l_mass" value="30.269" />
+  <property name="l_ixx"  value="1.2747" />
+  <property name="l_ixy"  value="-0.047351" />
+  <property name="l_ixz"  value="-0.00033135" />
+  <property name="l_iyy"  value="0.070602" />
+  <property name="l_iyz"  value="0.00061639" />
+  <property name="l_izz"  value="1.2616" />
+
+  <!-- joint: joint_u = l_link -> u_link -->
+  <property name="u_name"       value="u" />
+  <property name="u_type"       value="revolute" />
+  <property name="u_origin_xyz" value="0.0445 0.614 0" />
+  <property name="u_origin_rpy" value="-9.0409E-17 0 3.1416" />
+  <property name="u_parent"     value="l_link" />
+  <property name="u_child"      value="u_link" />
+  <property name="u_axis_xyz"   value="1 0 0" />
+  <property name="u_lower"      value="${-190*M_PI/180}" />
+  <property name="u_upper"      value="${175*M_PI/180}" />
+  <property name="u_effort"     value="0" />
+  <property name="u_velocity"   value="${220*M_PI/180}" />
+  <property name="u_damping"    value="1.7" />
+
+  <!-- link: u_link -->
+  <property name="u_xyz"  value="0.10628 -0.068994 -0.050692" />
+  <property name="u_rpy"  value="0 0 0" />
+  <property name="u_mass" value="40.603" />
+  <property name="u_ixx"  value="0.67103" />
+  <property name="u_ixy"  value="-0.023573" />
+  <property name="u_ixz"  value="-0.022912" />
+  <property name="u_iyy"  value="0.50654" />
+  <property name="u_iyz"  value="-0.20689" />
+  <property name="u_izz"  value="0.68713" />
+
+  <!-- joint: joint_r = u_link -> r_link -->
+  <property name="r_name"       value="r" />
+  <property name="r_type"       value="revolute" />
+  <property name="r_origin_xyz" value="0.109 -0.2 -0.069" />
+  <property name="r_origin_rpy" value="${M_PI/2} ${M_PI/2} 0" />
+  <property name="r_parent"     value="u_link" />
+  <property name="r_child"      value="r_link" />
+  <property name="r_axis_xyz"   value="1 0 0" />
+  <property name="r_lower"      value="${-150*M_PI/180}" />
+  <property name="r_upper"      value="${150*M_PI/180}" />
+  <property name="r_effort"     value="14" />
+  <property name="r_velocity"   value="${185*M_PI/180}" />
+  <property name="r_damping"    value="1.7" />
+
+  <!-- link: r_link -->
+  <property name="r_xyz"  value="0.2743 0.0044679 -0.016296" />
+  <property name="r_rpy"  value="0 0 0" />
+  <property name="r_mass" value="13.33" />
+  <property name="r_ixx"  value="0.056428" />
+  <property name="r_ixy"  value="-0.0016495" />
+  <property name="r_ixz"  value="0.0069738" />
+  <property name="r_iyy"  value="0.37608" />
+  <property name="r_iyz"  value="0.00075742" />
+  <property name="r_izz"  value="0.38768" />
+
+  <!-- joint: joint_b = r_link -> b_link -->
+  <property name="b_name"       value="b" />
+  <property name="b_type"       value="revolute" />
+  <property name="b_origin_xyz" value="0.571 0.07 0" />
+  <property name="b_origin_rpy" value="${-M_PI/2} 0 ${-M_PI/2}" />
+  <property name="b_parent"     value="r_link" />
+  <property name="b_child"      value="b_link" />
+  <property name="b_axis_xyz"   value="-1 0 0" />
+  <property name="b_lower"      value="${-45*M_PI/180}" />
+  <property name="b_upper"      value="${180*M_PI/180}" />
+  <property name="b_effort"     value="14" />
+  <property name="b_velocity"   value="${164*M_PI/180}" />
+  <property name="b_damping"    value="1.7" />
+
+  <!-- link: b_link -->
+  <property name="b_xyz"  value="0.056214 0.092191 0.012761" />
+  <property name="b_rpy"  value="0 0 0" />
+  <property name="b_mass" value="4.0209" />
+  <property name="b_ixx"  value="0.024141" />
+  <property name="b_ixy"  value="-0.0015461" />
+  <property name="b_ixz"  value="-0.00057354" />
+  <property name="b_iyy"  value="0.0086318" />
+  <property name="b_iyz"  value="-0.0030317" />
+  <property name="b_izz"  value="0.026048" />
+
+  <!-- joint: joint_t = b_link -> t_link -->
+  <property name="t_name"       value="t" />
+  <property name="t_type"       value="revolute" />
+  <property name="t_origin_xyz" value="0.07 0.1265 0.03" />
+  <property name="t_origin_rpy" value="0 0 ${M_PI/2}" />
+  <property name="t_parent"     value="b_link" />
+  <property name="t_child"      value="t_link" />
+  <property name="t_axis_xyz"   value="-1 0 0" />
+  <property name="t_lower"      value="${-200*M_PI/180}" />
+  <property name="t_upper"      value="${200*M_PI/180}" />
+  <property name="t_effort"     value="0.98" />
+  <property name="t_velocity"   value="${610*M_PI/180}" />
+  <property name="t_damping"    value="0.7" />
+
+  <!-- link: t_link -->
+  <property name="t_xyz"  value="0.041051 -1.0193E-05 -1.6479E-05" />
+  <property name="t_rpy"  value="0 0 0" />
+  <property name="t_mass" value="1.3027" />
+  <property name="t_ixx"  value="0.0012142" />
+  <property name="t_ixy"  value="-5.0796E-07" />
+  <property name="t_ixz"  value="1.2468E-06" />
+  <property name="t_iyy"  value="0.0011156" />
+  <property name="t_iyz"  value="2.6778E-06" />
+  <property name="t_izz"  value="0.0011096" />
+
+  <!-- Macro which defines a joint, link, transmission, gazebo parameters -->
+  <xacro:macro name="ma1400_link" params="name xyz rpy mass ixx ixy ixz iyy iyz izz type origin_xyz origin_rpy parent child axis_xyz lower upper effort velocity damping">
+    <joint name="joint_${name}" type="${type}">
+      <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+      <parent link="${parent}" />
+      <child link="${child}" />
+      <axis xyz="${axis_xyz}" />
+      <limit lower="${lower}" upper="${upper}"
+             effort="${effort}" velocity="${velocity}" />
+      <dynamics damping="${damping}" />
+    </joint>
+    <link name="${name}_link">
+      <inertial>
+        <origin xyz="${xyz}" rpy="${rpy}" />
+        <mass value="${mass}" />
+        <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+                 iyy="${iyy}" iyz="${iyz}" izz="${izz}" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://ma1400_sim/meshes/${name}_link.stl" />
+        </geometry>
+        <material name="Cast Carbon Steal">
+          <color rgba="0.52941 0.54902 0.54902 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://ma1400_sim/meshes/${name}_link.stl" />
+        </geometry>
+      </collision>
+    </link>
+    <xacro:ma1400_transmission name="${name}" />
+    <xacro:ma1400_gazebo name="${name}" />
+  </xacro:macro>
+  <!-- Macro which defines a joint, link, transmission, gazebo parameters -->
+
+
+  <!-- Define all the joints and links -->
+  <link name="world" />
+
+  <!-- base_link -->
+  <xacro:ma1400_link name="${base_name}" xyz="${base_xyz}" rpy="${base_rpy}"
+                     mass="${base_mass}"
+                     ixx="${base_ixx}" ixy="${base_ixy}" ixz="${base_ixz}"
+                     iyy="${base_iyy}" iyz="${base_iyz}" izz="${base_izz}"
+                     type="${base_type}"
+                     origin_xyz="${base_origin_xyz}"
+                     origin_rpy="${base_origin_rpy}"
+                     parent="${base_parent}"
+                     child="${base_child}"
+                     axis_xyz="${base_axis_xyz}"
+                     lower="${base_lower}"
+                     upper="${base_upper}"
+                     effort="${base_effort}"
+                     velocity="${base_velocity}"
+                     damping="${base_damping}" />
+
+
+  <!-- s_link -->
+  <xacro:ma1400_link name="${s_name}" xyz="${s_xyz}" rpy="${s_rpy}"
+                     mass="${s_mass}"
+                     ixx="${s_ixx}" ixy="${s_ixy}" ixz="${s_ixz}"
+                     iyy="${s_iyy}" iyz="${s_iyz}" izz="${s_izz}"
+                     type="${s_type}"
+                     origin_xyz="${s_origin_xyz}"
+                     origin_rpy="${s_origin_rpy}"
+                     parent="${s_parent}"
+                     child="${s_child}"
+                     axis_xyz="${s_axis_xyz}"
+                     lower="${s_lower}"
+                     upper="${s_upper}"
+                     effort="${s_effort}"
+                     velocity="${s_velocity}"
+                     damping="${s_damping}" />
+
+  <!-- l_link -->
+  <xacro:ma1400_link name="${l_name}" xyz="${l_xyz}" rpy="${l_rpy}"
+                     mass="${l_mass}"
+                     ixx="${l_ixx}" ixy="${l_ixy}" ixz="${l_ixz}"
+                     iyy="${l_iyy}" iyz="${l_iyz}" izz="${l_izz}"
+                     type="${l_type}"
+                     origin_xyz="${l_origin_xyz}"
+                     origin_rpy="${l_origin_rpy}"
+                     parent="${l_parent}"
+                     child="${l_child}"
+                     axis_xyz="${l_axis_xyz}"
+                     lower="${l_lower}"
+                     upper="${l_upper}"
+                     effort="${l_effort}"
+                     velocity="${l_velocity}"
+                     damping="${l_damping}" />
+
+  <!-- u_link -->
+  <xacro:ma1400_link name="${u_name}" xyz="${u_xyz}" rpy="${u_rpy}"
+                     mass="${u_mass}"
+                     ixx="${u_ixx}" ixy="${u_ixy}" ixz="${u_ixz}"
+                     iyy="${u_iyy}" iyz="${u_iyz}" izz="${u_izz}"
+                     type="${u_type}"
+                     origin_xyz="${u_origin_xyz}"
+                     origin_rpy="${u_origin_rpy}"
+                     parent="${u_parent}"
+                     child="${u_child}"
+                     axis_xyz="${u_axis_xyz}"
+                     lower="${u_lower}"
+                     upper="${u_upper}"
+                     effort="${u_effort}"
+                     velocity="${u_velocity}"
+                     damping="${u_damping}"/>
+
+  <!-- r_link -->
+  <xacro:ma1400_link name="${r_name}" xyz="${r_xyz}" rpy="${r_rpy}"
+                     mass="${r_mass}"
+                     ixx="${r_ixx}" ixy="${r_ixy}" ixz="${r_ixz}"
+                     iyy="${r_iyy}" iyz="${r_iyz}" izz="${r_izz}"
+                     type="${r_type}"
+                     origin_xyz="${r_origin_xyz}"
+                     origin_rpy="${r_origin_rpy}"
+                     parent="${r_parent}"
+                     child="${r_child}"
+                     axis_xyz="${r_axis_xyz}"
+                     lower="${r_lower}"
+                     upper="${r_upper}"
+                     effort="${r_effort}"
+                     velocity="${r_velocity}"
+                     damping="${r_damping}"/>
+
+  <!-- b_link -->
+  <xacro:ma1400_link name="${b_name}" xyz="${b_xyz}" rpy="${b_rpy}"
+                     mass="${b_mass}"
+                     ixx="${b_ixx}" ixy="${b_ixy}" ixz="${b_ixz}"
+                     iyy="${b_iyy}" iyz="${b_iyz}" izz="${b_izz}"
+                     type="${b_type}"
+                     origin_xyz="${b_origin_xyz}"
+                     origin_rpy="${b_origin_rpy}"
+                     parent="${b_parent}"
+                     child="${b_child}"
+                     axis_xyz="${b_axis_xyz}"
+                     lower="${b_lower}"
+                     upper="${b_upper}"
+                     effort="${b_effort}"
+                     velocity="${b_velocity}"
+                     damping="${b_damping}"/>
+
+  <!-- t_link -->
+  <xacro:ma1400_link name="${t_name}" xyz="${t_xyz}" rpy="${t_rpy}"
+                     mass="${t_mass}"
+                     ixx="${t_ixx}" ixy="${t_ixy}" ixz="${t_ixz}"
+                     iyy="${t_iyy}" iyz="${t_iyz}" izz="${t_izz}"
+                     type="${t_type}"
+                     origin_xyz="${t_origin_xyz}"
+                     origin_rpy="${t_origin_rpy}"
+                     parent="${t_parent}"
+                     child="${t_child}"
+                     axis_xyz="${t_axis_xyz}"
+                     lower="${t_lower}"
+                     upper="${t_upper}"
+                     effort="${t_effort}"
+                     velocity="${t_velocity}"
+                     damping="${t_damping}" />
+
+</robot>
