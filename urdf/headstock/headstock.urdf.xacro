@@ -1,5 +1,29 @@
 <?xml version="1.0"?>
 <robot name="headstock" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="M_PI" value="3.1415926535897931"/>
+
+  <link name="world" />
+
+    <joint
+    name="joint_base"
+    type="revolute">
+    <origin
+      xyz="2 0.422021 0"
+      rpy="0 ${-M_PI/2} ${-M_PI/2}" />
+    <parent
+      link="world" />
+    <child
+      link="base_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+
   <link
     name="base_link">
     <inertial>
@@ -40,6 +64,24 @@
       </geometry>
     </collision>
   </link>
+
+  <joint
+    name="joint_revolute"
+    type="revolute">
+    <origin
+      xyz="0.815 0 0.1108"
+      rpy="0 1.5708 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="revolute_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      effort="0"
+      velocity="0" />
+  </joint>
+
   <link
     name="revolute_link">
     <inertial>
@@ -80,22 +122,26 @@
       </geometry>
     </collision>
   </link>
+
   <joint
-    name="joint_revolute"
-    type="revolute">
+    name="joint_prismatic"
+    type="prismatic">
     <origin
-      xyz="0.815 0 0.1108"
-      rpy="0 1.5708 0" />
+      xyz="0.1108 0 0"
+      rpy="3.2816E-38 -3.1907E-15 -1.513E-16" />
     <parent
-      link="base_link" />
-    <child
       link="revolute_link" />
+    <child
+      link="prismatic_link" />
     <axis
-      xyz="1 0 0" />
+      xyz="0 1 0" />
     <limit
+      lower="0"
+      upper="0"
       effort="0"
       velocity="0" />
   </joint>
+
   <link
     name="prismatic_link">
     <inertial>
@@ -136,22 +182,5 @@
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_prismatic"
-    type="prismatic">
-    <origin
-      xyz="0.1108 0 0"
-      rpy="3.2816E-38 -3.1907E-15 -1.513E-16" />
-    <parent
-      link="revolute_link" />
-    <child
-      link="prismatic_link" />
-    <axis
-      xyz="0 1 0" />
-    <limit
-      lower="0"
-      upper="0"
-      effort="0"
-      velocity="0" />
-  </joint>
+
 </robot>

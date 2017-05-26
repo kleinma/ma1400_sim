@@ -1,22 +1,5 @@
 <launch>
 
-  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
-  <arg name="paused" default="false"/>
-  <arg name="use_sim_time" default="true"/>
-  <arg name="gui" default="true"/>
-  <arg name="headless" default="false"/>
-  <arg name="debug" default="false"/>
-
-  <!-- Load an empty gazebo world -->
-  <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <!--arg name="world_name" value="$(find abby_gazebo)/worlds/abby.world"/-->
-    <arg name="debug" value="$(arg debug)" />
-    <arg name="gui" value="$(arg gui)" />
-    <arg name="paused" value="$(arg paused)"/>
-    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
-    <arg name="headless" value="$(arg headless)"/>
-  </include>
-
     <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description"
     command="$(find xacro)/xacro --inorder '$(find ma1400_sim)/urdf/ma1400/ma1400.urdf.xacro'" />
@@ -28,7 +11,7 @@
     <!-- Spawn joint controllers -->
   <rosparam command="load" file="$(find ma1400_sim)/launch/ma1400_control_params.yaml"/>
   <node name="controller_spawner" pkg="controller_manager" type="spawner"
-        respawn="false" output="screen" ns="/ma1400"
+        respawn="false" output="screen" ns="ma1400"
         args="joint_state_controller
               joint_s_controller
               joint_l_controller
@@ -40,7 +23,7 @@
   <!-- convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher"
         type="robot_state_publisher" respawn="false" output="screen">
-    <remap from="/joint_states" to="/ma1400/joint_states" />
+    <remap from="joint_states" to="ma1400/joint_states" />
   </node>
 
   <!-- run the motoros interface simulator -->
@@ -53,4 +36,5 @@
     pkg="rostopic"
     type="rostopic"
     args="pub /calibrated std_msgs/Bool true" />
+
 </launch>
