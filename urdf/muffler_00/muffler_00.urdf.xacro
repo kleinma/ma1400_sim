@@ -1,5 +1,33 @@
 <?xml version="1.0"?>
 <robot name="muffler_00" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="M_PI" value="3.1415926535897931"/>
+  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <xacro:include filename="$(find ma1400_sim)/urdf/muffler_00/muffler_00.gazebo.xacro" />
+  <!-- Import trasnmission macro -->
+  <xacro:include filename="$(find ma1400_sim)/urdf/muffler_00/muffler_00.transmission.xacro" />
+  <!-- Add the headstock to the muffler -->
+  <xacro:include filename="$(find ma1400_sim)/urdf/headstock/headstock.urdf.xacro" />
+
+  <joint
+    name="joint_muffler"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="prismatic_link" />
+    <child
+      link="muffler_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+
   <link
     name="muffler_link">
     <inertial>
@@ -40,4 +68,7 @@
       </geometry>
     </collision>
   </link>
+  <xacro:muffler_00_transmission name="revolute" />
+
+
 </robot>

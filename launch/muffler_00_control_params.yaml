@@ -1,0 +1,7 @@
+joint_state_controller:
+  type: "joint_state_controller/JointStateController"
+  publish_rate: 50
+
+joint_revolute_controller:
+  type: "position_controllers/JointPositionController"
+  joint: joint_revolute

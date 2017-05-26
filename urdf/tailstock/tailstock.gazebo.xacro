@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- tailstock gazebo macro -->
+  <xacro:macro name="ma1400_gazebo" params="name">
+    <gazebo reference="${name}_link">
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+      <material>Gazebo/Gray</material>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,25 @@
+<launch>
+
+    <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro --inorder '$(find ma1400_sim)/urdf/muffler_00/muffler_00.urdf.xacro'" />
+
+    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+        args="-urdf -model muffler_00 -param robot_description
+              -x 1.5 -y 0.422021 -z 0.0607410 "/>
+
+  <!-- Spawn joint controllers -->
+  <rosparam command="load" file="$(find ma1400_sim)/launch/muffler_00_control_params.yaml"/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        respawn="false" output="screen"
+        args="joint_state_controller
+              joint_revolute_controller" />
+
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+        type="robot_state_publisher" respawn="false" output="screen">
+  </node>
+  
+</launch>
