@@ -3,9 +3,9 @@
   <!-- Constants for robot dimensions -->
   <xacro:property name="M_PI" value="3.1415926535897931"/>
   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
-  <xacro:include filename="$(find ma1400_sim)/urdf/ma1400.gazebo.xacro" />
+  <xacro:include filename="$(find ma1400_sim)/urdf/ma1400/ma1400.gazebo.xacro" />
   <!-- Import trasnmission macro -->
-  <xacro:include filename="$(find ma1400_sim)/urdf/ma1400.transmission.xacro"/>
+  <xacro:include filename="$(find ma1400_sim)/urdf/ma1400/ma1400.transmission.xacro" />
 
   <!-- Parameters for each joint and link -->
   <!-- joint: joint_base = world -> base_link -->
