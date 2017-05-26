@@ -69,7 +69,7 @@
     name="joint_prismatic"
     type="prismatic">
     <origin
-      xyz="0.87075 0 -0.2021"
+      xyz="0.87075 0 0.095915"
       rpy="0 1.5708 0" />
     <parent
       link="base_link" />
