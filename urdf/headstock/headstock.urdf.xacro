@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<robot name="headstock" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.51244 -2.3404E-05 0.2498"
+        rpy="0 0 0" />
+      <mass
+        value="78.401" />
+      <inertia
+        ixx="0.77135"
+        ixy="-0.001359"
+        ixz="-0.11123"
+        iyy="8.3377"
+        iyz="0.0002892"
+        izz="8.4743" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/headstock/base_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/headstock/base_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="revolute_link">
+    <inertial>
+      <origin
+        xyz="-0.038458 -0.01197 1.626E-05"
+        rpy="0 0 0" />
+      <mass
+        value="28.069" />
+      <inertia
+        ixx="0.33422"
+        ixy="0.010472"
+        ixz="-1.7812E-06"
+        iyy="0.15979"
+        iyz="4.2242E-05"
+        izz="0.20701" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/headstock/revolute_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/headstock/revolute_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_revolute"
+    type="revolute">
+    <origin
+      xyz="0.815 0 0.1108"
+      rpy="0 1.5708 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="revolute_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="prismatic_link">
+    <inertial>
+      <origin
+        xyz="-0.044931 -0.00043316 0.00084535"
+        rpy="0 0 0" />
+      <mass
+        value="13.994" />
+      <inertia
+        ixx="0.048967"
+        ixy="-0.00025398"
+        ixz="0.00051891"
+        iyy="0.039037"
+        iyz="0.00056149"
+        izz="0.033771" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/headstock/prismatic_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/headstock/prismatic_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_prismatic"
+    type="prismatic">
+    <origin
+      xyz="0.1108 0 0"
+      rpy="3.2816E-38 -3.1907E-15 -1.513E-16" />
+    <parent
+      link="revolute_link" />
+    <child
+      link="prismatic_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>

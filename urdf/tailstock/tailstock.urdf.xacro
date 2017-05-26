@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<robot name="tailstock" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.010504 2.0404E-10 -1.8516E-16"
+        rpy="0 0 0" />
+      <mass
+        value="43.494" />
+      <inertia
+        ixx="3.2702"
+        ixy="-1.3273E-10"
+        ixz="1.0184E-16"
+        iyy="2.8398"
+        iyz="-1.0913E-11"
+        izz="0.4342" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/tailstock/base_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/tailstock/base_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="prismatic_link">
+    <inertial>
+      <origin
+        xyz="-0.16686 -0.00059778 -0.58998"
+        rpy="0 0 0" />
+      <mass
+        value="46.132" />
+      <inertia
+        ixx="4.8379"
+        ixy="-0.00098649"
+        ixz="-0.52148"
+        iyy="4.7658"
+        iyz="-0.0066886"
+        izz="0.74062" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/tailstock/prismatic_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/tailstock/prismatic_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_prismatic"
+    type="prismatic">
+    <origin
+      xyz="0.87075 0 -0.2021"
+      rpy="0 1.5708 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="prismatic_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-0.2224"
+      upper="0.2224"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="revolute_link">
+    <inertial>
+      <origin
+        xyz="-0.073179 1.8326E-09 -0.00010482"
+        rpy="0 0 0" />
+      <mass
+        value="21.294" />
+      <inertia
+        ixx="0.11729"
+        ixy="-2.2243E-09"
+        ixz="-8.2318E-05"
+        iyy="0.078253"
+        iyz="9.6119E-10"
+        izz="0.13054" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/tailstock/revolute_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/tailstock/revolute_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_revolute"
+    type="revolute">
+    <origin
+      xyz="0.095915 0 0"
+      rpy="-4.9284E-29 -4.5181E-15 6.8878E-15" />
+    <parent
+      link="prismatic_link" />
+    <child
+      link="revolute_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>

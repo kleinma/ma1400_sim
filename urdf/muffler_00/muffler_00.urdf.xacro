@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot name="muffler_00" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <link
+    name="muffler_link">
+    <inertial>
+      <origin
+        xyz="0.41022 -5.2854E-07 -0.00035644"
+        rpy="0 0 0" />
+      <mass
+        value="6.8277" />
+      <inertia
+        ixx="0.058788"
+        ixy="-2.2429E-06"
+        ixz="0.0019211"
+        iyy="0.41247"
+        iyz="-1.2974E-07"
+        izz="0.41213" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/muffler_00/muffler_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.64706 0.61961 0.58824 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ma1400_sim/meshes/muffler_00/muffler_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+</robot>
