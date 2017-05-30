@@ -16,17 +16,15 @@
     <arg name="headless" value="$(arg headless)"/>
   </include>
 
-  <!--
-  <group ns="/">
+  <group ns="ma1400">
     <include file="$(find ma1400_sim)/launch/ma1400.gazebo.launch" />
   </group>
-  -->
 
-  <group ns="/tailstock">
+  <group ns="tailstock">
     <include file="$(find ma1400_sim)/launch/tailstock.gazebo.launch" />
   </group>
 
-  <group ns="/">
+  <group ns="muffler_00">
     <include file="$(find ma1400_sim)/launch/muffler_00.gazebo.launch" />
   </group>
 

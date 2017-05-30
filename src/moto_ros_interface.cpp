@@ -111,15 +111,15 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
 MotoRosNode::MotoRosNode(): private_nh_("~") {
 
   // Create publisher to send commands to ros_control controllers
-  joint_sPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_s_controller/command",1);
-  joint_lPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_l_controller/command",1);
-  joint_uPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_u_controller/command",1);
-  joint_rPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_r_controller/command",1);
-  joint_bPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_b_controller/command",1);
-  joint_tPub_ = public_nh_.advertise<std_msgs::Float64>("ma1400/joint_t_controller/command",1);
+  joint_sPub_ = public_nh_.advertise<std_msgs::Float64>("joint_s_controller/command",1);
+  joint_lPub_ = public_nh_.advertise<std_msgs::Float64>("joint_l_controller/command",1);
+  joint_uPub_ = public_nh_.advertise<std_msgs::Float64>("joint_u_controller/command",1);
+  joint_rPub_ = public_nh_.advertise<std_msgs::Float64>("joint_r_controller/command",1);
+  joint_bPub_ = public_nh_.advertise<std_msgs::Float64>("joint_b_controller/command",1);
+  joint_tPub_ = public_nh_.advertise<std_msgs::Float64>("joint_t_controller/command",1);
 
   // Create a subscriber to receive the JointTrajectory message
-  trajSub_ = public_nh_.subscribe("ma1400/joint_path_command",10,&MotoRosNode::trajSubCB, this);
+  trajSub_ = public_nh_.subscribe("joint_path_command",10,&MotoRosNode::trajSubCB, this);
 }
 
 /* Destructor */

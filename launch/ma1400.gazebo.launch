@@ -11,7 +11,7 @@
     <!-- Spawn joint controllers -->
   <rosparam command="load" file="$(find ma1400_sim)/launch/ma1400_control_params.yaml"/>
   <node name="controller_spawner" pkg="controller_manager" type="spawner"
-        respawn="false" output="screen" ns="ma1400"
+        respawn="false" output="screen"
         args="joint_state_controller
               joint_s_controller
               joint_l_controller
@@ -23,7 +23,6 @@
   <!-- convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher"
         type="robot_state_publisher" respawn="false" output="screen">
-    <remap from="joint_states" to="ma1400/joint_states" />
   </node>
 
   <!-- run the motoros interface simulator -->

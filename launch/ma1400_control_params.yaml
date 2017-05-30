@@ -1,28 +1,27 @@
-ma1400:
-  joint_state_controller:
-    type: "joint_state_controller/JointStateController"
-    publish_rate: 50
+joint_state_controller:
+  type: "joint_state_controller/JointStateController"
+  publish_rate: 50
 
-  joint_s_controller:
-    type: "position_controllers/JointPositionController"
-    joint: joint_s
+joint_s_controller:
+  type: "position_controllers/JointPositionController"
+  joint: joint_s
 
-  joint_l_controller:
-    type: "position_controllers/JointPositionController"
-    joint: joint_l
+joint_l_controller:
+  type: "position_controllers/JointPositionController"
+  joint: joint_l
 
-  joint_u_controller:
-    type: "position_controllers/JointPositionController"
-    joint: joint_u
+joint_u_controller:
+  type: "position_controllers/JointPositionController"
+  joint: joint_u
 
-  joint_r_controller:
-    type: "position_controllers/JointPositionController"
-    joint: joint_r
+joint_r_controller:
+  type: "position_controllers/JointPositionController"
+  joint: joint_r
 
-  joint_b_controller:
-    type: "position_controllers/JointPositionController"
-    joint: joint_b
+joint_b_controller:
+  type: "position_controllers/JointPositionController"
+  joint: joint_b
 
-  joint_t_controller:
-    type: "position_controllers/JointPositionController"
-    joint: joint_t
+joint_t_controller:
+  type: "position_controllers/JointPositionController"
+  joint: joint_t
