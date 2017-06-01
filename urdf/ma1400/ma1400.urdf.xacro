@@ -18,7 +18,7 @@
   <property name="base_axis_xyz"   value="0 0 1" />
   <property name="base_lower"      value="0" />
   <property name="base_upper"      value="0" />
-  <property name="base_effort"     value="0" />
+  <property name="base_effort"     value="100" />
   <property name="base_velocity"   value="0" />
   <property name="base_damping"    value="0.7" />
 
@@ -37,13 +37,13 @@
   <property name="s_name"       value="s" />
   <property name="s_type"       value="revolute" />
   <property name="s_origin_xyz" value="0 0 0.0795" />
-  <property name="s_origin_rpy" value="${M_PI} ${-M_PI/2} 0" />
+  <property name="s_origin_rpy" value="0 ${-M_PI/2} 0" />
   <property name="s_parent"     value="base_link" />
   <property name="s_child"      value="s_link" />
   <property name="s_axis_xyz"   value="1 0 0" />
   <property name="s_lower"      value="${-170*M_PI/180}" />
   <property name="s_upper"      value="${170*M_PI/180}" />
-  <property name="s_effort"     value="0" />
+  <property name="s_effort"     value="100" />
   <property name="s_velocity"   value="${220*M_PI/180}" />
   <property name="s_damping"    value="0.7" />
 
@@ -68,7 +68,7 @@
   <property name="l_axis_xyz"   value="-1 0 0" />
   <property name="l_lower"      value="${-90*M_PI/180}" />
   <property name="l_upper"      value="${170*M_PI/180}" />
-  <property name="l_effort"     value="0" />
+  <property name="l_effort"     value="100" />
   <property name="l_velocity"   value="${200*M_PI/180}" />
   <property name="l_damping"    value="1.7" />
 
@@ -93,7 +93,7 @@
   <property name="u_axis_xyz"   value="1 0 0" />
   <property name="u_lower"      value="${-175*M_PI/180}" />
   <property name="u_upper"      value="${190*M_PI/180}" />
-  <property name="u_effort"     value="0" />
+  <property name="u_effort"     value="100" />
   <property name="u_velocity"   value="${220*M_PI/180}" />
   <property name="u_damping"    value="1.7" />
 
@@ -370,5 +370,22 @@
                      effort="${t_effort}"
                      velocity="${t_velocity}"
                      damping="${t_damping}" />
+
+  <!-- tip_link -->
+  <xacro:ma1400_link name="${tip_name}" xyz="${tip_xyz}" rpy="${tip_rpy}"
+                     mass="${tip_mass}"
+                     ixx="${tip_ixx}" ixy="${tip_ixy}" ixz="${tip_ixz}"
+                     iyy="${tip_iyy}" iyz="${tip_iyz}" izz="${tip_izz}"
+                     type="${tip_type}"
+                     origin_xyz="${tip_origin_xyz}"
+                     origin_rpy="${tip_origin_rpy}"
+                     parent="${tip_parent}"
+                     child="${tip_child}"
+                     axis_xyz="${tip_axis_xyz}"
+                     lower="${tip_lower}"
+                     upper="${tip_upper}"
+                     effort="${tip_effort}"
+                     velocity="${tip_velocity}"
+                     damping="${tip_damping}" />
 
 </robot>
