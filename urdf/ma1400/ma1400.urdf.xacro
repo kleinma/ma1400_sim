@@ -12,7 +12,7 @@
   <property name="base_name"       value="base" />
   <property name="base_type"       value="revolute" />
   <property name="base_origin_xyz" value="0 0 0" />
-  <property name="base_origin_rpy" value="0 ${-M_PI/2} 0" />
+  <property name="base_origin_rpy" value="0 0 0" />
   <property name="base_parent"     value="world" />
   <property name="base_child"      value="base_link" />
   <property name="base_axis_xyz"   value="0 0 1" />
@@ -23,21 +23,21 @@
   <property name="base_damping"    value="0.7" />
 
   <!-- link: base_link -->
-  <property name="base_xyz"  value="0.0659 0.0031108 0.04815" />
-  <property name="base_rpy"  value="0 0 0" />
-  <property name="base_mass" value="22.072" />
-  <property name="base_ixx"  value="0.50652" />
-  <property name="base_ixy"  value="-0.0073335" />
-  <property name="base_ixz"  value="-0.028252" />
-  <property name="base_iyy"  value="0.36205" />
-  <property name="base_iyz"  value="-0.010806" />
-  <property name="base_izz"  value="0.24865" />
+  <property name="base_xyz"  value="-0.048249 0.0031755 0.057933" />
+  <property name="base_rpy"  value="0 0 0"      />
+  <property name="base_mass" value="20.675"     />
+  <property name="base_ixx"  value="0.23299" />
+  <property name="base_ixy"  value="0.010295" />
+  <property name="base_ixz"  value="0.026547" />
+  <property name="base_iyy"  value="0.33925" />
+  <property name="base_iyz"  value="-0.0069338" />
+  <property name="base_izz"  value="0.47449" />
 
   <!-- joint: joint_s = base_link -> s_link -->
   <property name="s_name"       value="s" />
   <property name="s_type"       value="revolute" />
-  <property name="s_origin_xyz" value="0 0.0875 0" />
-  <property name="s_origin_rpy" value="0 0 0" />
+  <property name="s_origin_xyz" value="0 0 0.0795" />
+  <property name="s_origin_rpy" value="${M_PI} ${-M_PI/2} 0" />
   <property name="s_parent"     value="base_link" />
   <property name="s_child"      value="s_link" />
   <property name="s_axis_xyz"   value="1 0 0" />
@@ -48,71 +48,71 @@
   <property name="s_damping"    value="0.7" />
 
   <!-- link: s_link -->
-  <property name="s_xyz"  value="0.062654 -0.0075772 -0.0043747" />
+  <property name="s_xyz"  value="0.23291 0.00363 -0.063572" />
   <property name="s_rpy"  value="0 0 0" />
-  <property name="s_mass" value="22.072" />
-  <property name="s_ixx"  value="0.50652" />
-  <property name="s_ixy"  value="-0.0073335" />
-  <property name="s_ixz"  value="-0.028252" />
-  <property name="s_iyy"  value="0.36205" />
-  <property name="s_iyz"  value="-0.010806" />
-  <property name="s_izz"  value="0.24865" />
+  <property name="s_mass" value="88.83" />
+  <property name="s_ixx"  value="1.4964" />
+  <property name="s_ixy"  value="-0.058219" />
+  <property name="s_ixz"  value="0.70048" />
+  <property name="s_iyy"  value="2.1203" />
+  <property name="s_iyz"  value="0.050416" />
+  <property name="s_izz"  value="1.9586" />
 
   <!-- joint: joint_l = s_link -> l_link -->
   <property name="l_name"       value="l" />
   <property name="l_type"       value="revolute" />
   <property name="l_origin_xyz" value="0.3705 -0.0655 -0.15" />
-  <property name="l_origin_rpy" value="-9.0409E-17 0 -1.5708" />
+  <property name="l_origin_rpy" value="${M_PI/2} 0 ${M_PI/2}" />
   <property name="l_parent"     value="s_link" />
   <property name="l_child"      value="l_link" />
   <property name="l_axis_xyz"   value="-1 0 0" />
-  <property name="l_lower"      value="${-M_PI/2}" />
+  <property name="l_lower"      value="${-90*M_PI/180}" />
   <property name="l_upper"      value="${170*M_PI/180}" />
   <property name="l_effort"     value="0" />
-  <property name="l_velocity"   value="${220*M_PI/180}" />
+  <property name="l_velocity"   value="${200*M_PI/180}" />
   <property name="l_damping"    value="1.7" />
 
   <!-- link: l_link -->
-  <property name="l_xyz"  value="0.069501 0.26438 -9.7345E-05" />
+  <property name="l_xyz"  value="-0.0695 -8.5276E-05 0.26439" />
   <property name="l_rpy"  value="0 0 0" />
-  <property name="l_mass" value="30.269" />
-  <property name="l_ixx"  value="1.2747" />
-  <property name="l_ixy"  value="-0.047351" />
-  <property name="l_ixz"  value="-0.00033135" />
-  <property name="l_iyy"  value="0.070602" />
-  <property name="l_iyz"  value="0.00061639" />
-  <property name="l_izz"  value="1.2616" />
+  <property name="l_mass" value="28.317" />
+  <property name="l_ixx"  value="1.1928" />
+  <property name="l_ixy"  value="0.00030289" />
+  <property name="l_ixz"  value="0.044292" />
+  <property name="l_iyy"  value="1.1806" />
+  <property name="l_iyz"  value="0.00063599" />
+  <property name="l_izz"  value="0.066034" />
 
   <!-- joint: joint_u = l_link -> u_link -->
   <property name="u_name"       value="u" />
   <property name="u_type"       value="revolute" />
-  <property name="u_origin_xyz" value="0.0445 0.614 0" />
-  <property name="u_origin_rpy" value="-9.0409E-17 0 3.1416" />
+  <property name="u_origin_xyz" value="-0.0105 0 0.614" />
+  <property name="u_origin_rpy" value="8.4471E-16 0 ${M_PI}" />
   <property name="u_parent"     value="l_link" />
   <property name="u_child"      value="u_link" />
   <property name="u_axis_xyz"   value="1 0 0" />
-  <property name="u_lower"      value="${-190*M_PI/180}" />
-  <property name="u_upper"      value="${175*M_PI/180}" />
+  <property name="u_lower"      value="${-175*M_PI/180}" />
+  <property name="u_upper"      value="${190*M_PI/180}" />
   <property name="u_effort"     value="0" />
   <property name="u_velocity"   value="${220*M_PI/180}" />
   <property name="u_damping"    value="1.7" />
 
   <!-- link: u_link -->
-  <property name="u_xyz"  value="0.10628 -0.068994 -0.050692" />
+  <property name="u_xyz"  value="-0.072277 0.050702 0.069002" />
   <property name="u_rpy"  value="0 0 0" />
-  <property name="u_mass" value="40.603" />
-  <property name="u_ixx"  value="0.67103" />
-  <property name="u_ixy"  value="-0.023573" />
-  <property name="u_ixz"  value="-0.022912" />
-  <property name="u_iyy"  value="0.50654" />
-  <property name="u_iyz"  value="-0.20689" />
-  <property name="u_izz"  value="0.68713" />
+  <property name="u_mass" value="45.493" />
+  <property name="u_ixx"  value="0.62809" />
+  <property name="u_ixy"  value="-0.021439" />
+  <property name="u_ixz"  value="-0.022058" />
+  <property name="u_iyy"  value="0.64311" />
+  <property name="u_iyz"  value="-0.19366" />
+  <property name="u_izz"  value="0.4741" />
 
   <!-- joint: joint_r = u_link -> r_link -->
   <property name="r_name"       value="r" />
   <property name="r_type"       value="revolute" />
-  <property name="r_origin_xyz" value="0.109 -0.2 -0.069" />
-  <property name="r_origin_rpy" value="${M_PI/2} ${M_PI/2} 0" />
+  <property name="r_origin_xyz" value="-0.075 0.069 0.2" />
+  <property name="r_origin_rpy" value="0 0 ${M_PI/2}" />
   <property name="r_parent"     value="u_link" />
   <property name="r_child"      value="r_link" />
   <property name="r_axis_xyz"   value="1 0 0" />
@@ -123,21 +123,21 @@
   <property name="r_damping"    value="1.7" />
 
   <!-- link: r_link -->
-  <property name="r_xyz"  value="0.2743 0.0044679 -0.016296" />
+  <property name="r_xyz"  value="0.27435 0.0044655 -0.016291" />
   <property name="r_rpy"  value="0 0 0" />
-  <property name="r_mass" value="13.33" />
-  <property name="r_ixx"  value="0.056428" />
-  <property name="r_ixy"  value="-0.0016495" />
-  <property name="r_ixz"  value="0.0069738" />
-  <property name="r_iyy"  value="0.37608" />
-  <property name="r_iyz"  value="0.00075742" />
-  <property name="r_izz"  value="0.38768" />
+  <property name="r_mass" value="12.48" />
+  <property name="r_ixx"  value="0.052841" />
+  <property name="r_ixy"  value="-0.0015314" />
+  <property name="r_ixz"  value="0.0065365" />
+  <property name="r_iyy"  value="0.35213" />
+  <property name="r_iyz"  value="0.00071105" />
+  <property name="r_izz"  value="0.36301" />
 
   <!-- joint: joint_b = r_link -> b_link -->
   <property name="b_name"       value="b" />
   <property name="b_type"       value="revolute" />
   <property name="b_origin_xyz" value="0.571 0.07 0" />
-  <property name="b_origin_rpy" value="${-M_PI/2} 0 ${-M_PI/2}" />
+  <property name="b_origin_rpy" value="${M_PI} 0 ${-M_PI/2}" />
   <property name="b_parent"     value="r_link" />
   <property name="b_child"      value="b_link" />
   <property name="b_axis_xyz"   value="-1 0 0" />
@@ -148,21 +148,21 @@
   <property name="b_damping"    value="1.7" />
 
   <!-- link: b_link -->
-  <property name="b_xyz"  value="0.056214 0.092191 0.012761" />
+  <property name="b_xyz"  value="0.056213 -0.012763 0.092186" />
   <property name="b_rpy"  value="0 0 0" />
-  <property name="b_mass" value="4.0209" />
-  <property name="b_ixx"  value="0.024141" />
-  <property name="b_ixy"  value="-0.0015461" />
-  <property name="b_ixz"  value="-0.00057354" />
-  <property name="b_iyy"  value="0.0086318" />
-  <property name="b_iyz"  value="-0.0030317" />
-  <property name="b_izz"  value="0.026048" />
+  <property name="b_mass" value="3.7633" />
+  <property name="b_ixx"  value="0.022596" />
+  <property name="b_ixy"  value="0.00053717" />
+  <property name="b_ixz"  value="-0.0014476" />
+  <property name="b_iyy"  value="0.02438" />
+  <property name="b_iyz"  value="0.0028381" />
+  <property name="b_izz"  value="0.0080793" />
 
   <!-- joint: joint_t = b_link -> t_link -->
   <property name="t_name"       value="t" />
   <property name="t_type"       value="revolute" />
-  <property name="t_origin_xyz" value="0.07 0.1265 0.03" />
-  <property name="t_origin_rpy" value="0 0 ${M_PI/2}" />
+  <property name="t_origin_xyz" value="0.07 -0.03 0.2" />
+  <property name="t_origin_rpy" value="${M_PI/2} ${-M_PI/2} 0" />
   <property name="t_parent"     value="b_link" />
   <property name="t_child"      value="t_link" />
   <property name="t_axis_xyz"   value="-1 0 0" />
@@ -173,15 +173,40 @@
   <property name="t_damping"    value="0.7" />
 
   <!-- link: t_link -->
-  <property name="t_xyz"  value="0.041051 -1.0193E-05 -1.6479E-05" />
+  <property name="t_xyz"  value="-0.032449 -1.0236E-05 -1.6467E-05" />
   <property name="t_rpy"  value="0 0 0" />
-  <property name="t_mass" value="1.3027" />
-  <property name="t_ixx"  value="0.0012142" />
-  <property name="t_ixy"  value="-5.0796E-07" />
-  <property name="t_ixz"  value="1.2468E-06" />
-  <property name="t_iyy"  value="0.0011156" />
-  <property name="t_iyz"  value="2.6778E-06" />
-  <property name="t_izz"  value="0.0011096" />
+  <property name="t_mass" value="1.2192" />
+  <property name="t_ixx"  value="0.0011364" />
+  <property name="t_ixy"  value="-4.7514E-07" />
+  <property name="t_ixz"  value="1.1667E-06" />
+  <property name="t_iyy"  value="0.0010441" />
+  <property name="t_iyz"  value="2.5103E-06" />
+  <property name="t_izz"  value="0.0010384" />
+
+  <!-- joint: joint_tip = t_link -> tip_link -->
+  <property name="tip_name"       value="tip" />
+  <property name="tip_type"       value="revolute" />
+  <property name="tip_origin_xyz" value="0 0 0" />
+  <property name="tip_origin_rpy" value="0 0 0" />
+  <property name="tip_parent"     value="t_link" />
+  <property name="tip_child"      value="tip_link" />
+  <property name="tip_axis_xyz"   value="1 0 0" />
+  <property name="tip_lower"      value="0" />
+  <property name="tip_upper"      value="0" />
+  <property name="tip_effort"     value="0" />
+  <property name="tip_velocity"   value="0" />
+  <property name="tip_damping"    value="0.7" />
+
+  <!-- link: tip_link -->
+  <property name="tip_xyz"  value="0.095555 0.00012133 -0.0028627" />
+  <property name="tip_rpy"  value="0 0 0" />
+  <property name="tip_mass" value="4.7616" />
+  <property name="tip_ixx"  value="0.007129" />
+  <property name="tip_ixy"  value="3.0719E-05" />
+  <property name="tip_ixz"  value="0.0036185" />
+  <property name="tip_iyy"  value="0.038442" />
+  <property name="tip_iyz"  value="1.6181E-05" />
+  <property name="tip_izz"  value="0.037678" />
 
   <!-- Macro which defines a joint, link, transmission, gazebo parameters -->
   <xacro:macro name="ma1400_link" params="name xyz rpy mass ixx ixy ixz iyy iyz izz type origin_xyz origin_rpy parent child axis_xyz lower upper effort velocity damping">
