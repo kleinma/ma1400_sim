@@ -39,7 +39,8 @@ if __name__ == "__main__":
   while rospy.get_rostime() == timeZero:
     # Sleep for a small time to make sure publishing and subscribing works.
     rospy.sleep(rospy.Duration(1))
-
+  # Add additional sleep because ROS is dumb... (wasn't publishing)
+  rospy.sleep(rospy.Duration(5))
   # Create a JointTrajectory object
   traj = JointTrajectory()
   # traj.header.stamp = rospy.get_time()
@@ -66,6 +67,6 @@ if __name__ == "__main__":
     points.append(point)
   traj.points= points
 
-  rospy.loginfo(traj)
+  # rospy.loginfo(traj)
   trajPub.publish(traj)
   rospy.loginfo('published?')
