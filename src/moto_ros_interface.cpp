@@ -1,4 +1,3 @@
-
 /******************************************************************************
 moto_ros_interface.cpp
 The MotoRosNode Class provides an interface between the ROS's JointTrajectory
