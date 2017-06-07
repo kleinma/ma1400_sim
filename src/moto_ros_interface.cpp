@@ -119,6 +119,11 @@ MotoRosNode::MotoRosNode(): private_nh_("~") {
 
   // Create a subscriber to receive the JointTrajectory message
   trajSub_ = public_nh_.subscribe("joint_path_command",10,&MotoRosNode::trajSubCB, this);
+
+  // Initialize the time increment for interpoloation (default = 0.01 sec)
+  if(!private_nh_.getParam("dt", dt_))
+    dt_ = 0.01;
+
 }
 
 /* Destructor */

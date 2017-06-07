@@ -48,6 +48,9 @@ class MotoRosNode {
 
   void trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& msg);
 
+  // Time increment for interpolation.
+  double dt_;
+
  public:
   MotoRosNode();
   ~MotoRosNode();
