@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   trajectory_msgs
+  sensor_msgs
   controller_manager
 )
 

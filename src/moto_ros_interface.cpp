@@ -30,6 +30,7 @@ SOFTWARE.
 #include <ros/ros.h>
 #include <trajectory_msgs/JointTrajectory.h>
 #include <trajectory_msgs/JointTrajectoryPoint.h>
+#include <sensor_msgs/JointState.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/String.h>
 #include "ma1400_sim/moto_ros_interface.h"
@@ -42,20 +43,10 @@ SOFTWARE.
 void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& msg) {
   ROS_INFO_STREAM(*msg);
 
-  // Create a vector that contains the standard order of the joint_names
-  std::vector<std::string> jointNamesStdOrder;
-  jointNamesStdOrder.push_back("joint_s");
-  jointNamesStdOrder.push_back("joint_l");
-  jointNamesStdOrder.push_back("joint_u");
-  jointNamesStdOrder.push_back("joint_r");
-  jointNamesStdOrder.push_back("joint_b");
-  jointNamesStdOrder.push_back("joint_t");
-
   // iterate over the joint names
   std::vector<int> indicies;
-  int j = 0;
   for(std::vector<std::string>::const_iterator it =
-        jointNamesStdOrder.begin(); it != jointNamesStdOrder.end(); it++)
+        jointNamesStdOrder_.begin(); it != jointNamesStdOrder_.end(); it++)
     {
       // look in msg->joint_names and see at which indicie that name exists
       // **currently no check for a missing name**
@@ -63,7 +54,6 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
                                    msg->joint_names.end(),
                                    *it)
                          - msg->joint_names.begin());
-      j++;
     }
 
   // DEBUG
@@ -72,6 +62,13 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
       ROS_DEBUG_STREAM("joint order in message:");
       ROS_DEBUG_STREAM(*it);
     }
+
+  // Set initial tPre, xPre, vPre by subscribing to joint_states
+  std::vector<double> xPre = currJointPos_;
+  std::vector<double> vPre = currJointVel_;
+  double tPre = 0;
+  std::vector<double> x, v;
+  double t;
 
   // Record when the message is received
   ros::Duration timeSinceLast = ros::Duration(0);
@@ -106,6 +103,27 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
     }
 }
 
+
+// Store the current position and velcoity when a JointState message is
+// recieved.
+void MotoRosNode::jointSubCB(const sensor_msgs::JointState::ConstPtr& msg) {
+  firstJointStateReceived_ = true;
+  // iterate over the joint names
+  std::vector<int> indicies;
+  int j = 0;
+  for(std::vector<std::string>::const_iterator it =
+        jointNamesStdOrder_.begin(); it != jointNamesStdOrder_.end(); it++)
+    {
+      // look in msg->name and see at which indicie that name exists
+      // **currently no check for a missing name**
+      int ind = std::find(msg->name.begin(),msg->name.end(),*it)- msg->name.begin();
+      currJointPos_.at(j) = msg->position.at(ind);
+      currJointVel_.at(j) = msg->position.at(ind);
+      j++;
+    }
+}
+
+
 /*Constructor */
 MotoRosNode::MotoRosNode(): private_nh_("~") {
 
@@ -120,10 +138,29 @@ MotoRosNode::MotoRosNode(): private_nh_("~") {
   // Create a subscriber to receive the JointTrajectory message
   trajSub_ = public_nh_.subscribe("joint_path_command",10,&MotoRosNode::trajSubCB, this);
 
+  // Create a subscriber to receive the JointState message
+  jointSub_ = public_nh_.subscribe("joint_states",1,&MotoRosNode::jointSubCB, this);
+
   // Initialize the time increment for interpoloation (default = 0.01 sec)
   if(!private_nh_.getParam("dt", dt_))
     dt_ = 0.01;
 
+  // Set this to false. It is set to true in jointSubCB
+  firstJointStateReceived_ = false;
+
+  // Create a vector with the joint names in order. ROS messages containing
+  // info about joints can list them in any order. By finding which order they
+  // are listed, we can quickly publish to the correct joint.
+  jointNamesStdOrder_.push_back("joint_s");
+  jointNamesStdOrder_.push_back("joint_l");
+  jointNamesStdOrder_.push_back("joint_u");
+  jointNamesStdOrder_.push_back("joint_r");
+  jointNamesStdOrder_.push_back("joint_b");
+  jointNamesStdOrder_.push_back("joint_t");
+
+  // Initilize with six entries (one for each joint
+  currJointPos_.resize(6);
+  currJointVel_.resize(6);
 }
 
 /* Destructor */

@@ -29,6 +29,7 @@ SOFTWARE.
 ******************************************************************************/
 #include <ros/ros.h>
 #include <trajectory_msgs/JointTrajectory.h>
+#include <sensor_msgs/JointState.h>
 
 #ifndef __MOTO_ROS_INTERFACE_H_INCLUDED__
 #define __MOTO_ROS_INTERFACE_H_INCLUDED__
@@ -45,11 +46,21 @@ class MotoRosNode {
   ros::Publisher joint_bPub_;
   ros::Publisher joint_tPub_;
   ros::Subscriber trajSub_;
+  ros::Subscriber jointSub_;
 
   void trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& msg);
+  void jointSubCB(const sensor_msgs::JointState::ConstPtr& msg);
+
+  // Create a vector that contains the standard order of the joint_names
+  std::vector<std::string> jointNamesStdOrder_;
 
   // Time increment for interpolation.
   double dt_;
+  // Current position and velocity (used as initial point in trajectory)
+  std::vector<double> currJointPos_;
+  std::vector<double> currJointVel_;
+  // Don't receive trajectories until you've found out where the arm is
+  bool firstJointStateReceived_;
 
  public:
   MotoRosNode();
