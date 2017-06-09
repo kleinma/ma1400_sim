@@ -35,6 +35,7 @@ SOFTWARE.
 #include <std_msgs/String.h>
 #include "ma1400_sim/moto_ros_interface.h"
 #include <vector>
+#include <cmath>
 #include <algorithm>
 #include <string>
 
@@ -56,19 +57,20 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
                          - msg->joint_names.begin());
     }
 
-  // DEBUG
-  for(std::vector<int>::const_iterator it = indicies.begin(); it != indicies.end(); it++)
-    {
-      ROS_DEBUG_STREAM("joint order in message:");
-      ROS_DEBUG_STREAM(*it);
-    }
-
   // Set initial tPre, xPre, vPre by subscribing to joint_states
   std::vector<double> xPre = currJointPos_;
   std::vector<double> vPre = currJointVel_;
   double tPre = 0;
-  std::vector<double> x, v;
-  double t;
+  std::vector<double> xTarg, vTarg, a1, a2;
+  double tTarg;
+  // x and v are will be a 2d vector that stores each interpolated x and v
+  // throughout the move from xPre to xTarg. The inner vector will span the
+  // joints, which the outer vector will span time.
+  std::vector<std::vector<double> > x, v;
+  std::vector<double> t;
+  x.push_back(xPre);
+  v.push_back(vPre);
+  t.push_back(tPre);
 
   // Record when the message is received
   ros::Duration timeSinceLast = ros::Duration(0);
@@ -80,6 +82,29 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
     {
       trajectory_msgs::JointTrajectoryPoint pnt;
       pnt = *it;
+      xTarg = pnt.positions;
+      vTarg = pnt.velocities;
+
+      // Find a1 and a2 for each joint
+      for(int i=0; i<6; i++) {
+        a1.at(i) = -12 * (xTarg.at(i) - xPre.at(i)) / pow(tTarg - tPre, 3)
+                   + 6 * (vTarg.at(i) + vPre.at(i)) / pow(tTarg - tPre, 2);
+
+        a2.at(i) =   6 * (xTarg.at(i) - xPre.at(i)) / pow(tTarg - tPre, 2)
+                   + 2 * (vTarg.at(i) + 2 * vPre.at(i)) / (tTarg - tPre);
+      }
+
+      while(t.at(t.size()-1) + dt_ <= tTarg) {
+        // Increment the time
+        t.push_back(t.at(t.size()-1) + dt_);
+        std::vector<double> xTemp, vTemp;
+        for(int i=0; i<6; i++) {
+
+        }
+      }
+
+
+
       timeSinceLast = pnt.time_from_start - last_time_from_start;
       last_time_from_start = pnt.time_from_start;
       timeSinceLast.sleep();
@@ -98,8 +123,6 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
       joint_bPub_.publish(command);
       command.data = pnt.positions[indicies[5]];
       joint_tPub_.publish(command);
-      ROS_INFO_STREAM("i = " << i << ", time = " << ros::Time::now().toSec());
-      i++;
     }
 }
 
