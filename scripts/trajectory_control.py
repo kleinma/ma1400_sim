@@ -58,14 +58,18 @@ if __name__ == "__main__":
   for i in xrange(N):
     point = JointTrajectoryPoint()
     positions = []
+    velocities = []
     time_from_start = rospy.Duration.from_sec(time_range*i/float(N-1))
     point.time_from_start = time_from_start
     position = angle_range*math.sin(2*math.pi*i/(N-1))
+    velocity = 2*math.pi*angle_range*math.cos(2*math.pi*i/(N-1))
     for j in xrange(6):
       positions.append(position)
+      velocities.append(velocity)
     point.positions = positions
+    point.velocities = velocities
     points.append(point)
-  traj.points= points
+  traj.points = points
 
   # rospy.loginfo(traj)
   trajPub.publish(traj)
