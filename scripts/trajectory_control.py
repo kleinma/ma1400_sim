@@ -59,10 +59,10 @@ if __name__ == "__main__":
     point = JointTrajectoryPoint()
     positions = []
     velocities = []
-    time_from_start = rospy.Duration.from_sec(time_range*i/float(N-1))
+    time_from_start = rospy.Duration.from_sec(time_range*(i+1)/float(N))
     point.time_from_start = time_from_start
-    position = angle_range*math.sin(2*math.pi*i/(N-1))
-    velocity = 2*math.pi*angle_range*math.cos(2*math.pi*i/(N-1))
+    position = angle_range*math.sin(2*math.pi*(i+1)/float(N))
+    velocity = 2*math.pi/float(time_range)*angle_range*math.cos(2*math.pi*(i+1)/float(N))
     for j in xrange(6):
       positions.append(position)
       velocities.append(velocity)
