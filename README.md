@@ -32,15 +32,19 @@ A low level position, velocity, or effort controller can be applied at each join
 
 ### Trajectory controller simulator and interface
 
-The [Motoplus-ROS Incremental Motion interface](http://wiki.ros.org/motoman_driver?action=AttachFile&do=get&target=MotoRos_EDS.pdf) defines the reaction of the controller in response to a `trajectory_msgs\JointTrajectory` message. The controller should interpolate between.
+The [Motoplus-ROS Incremental Motion interface](http://wiki.ros.org/motoman_driver?action=AttachFile&do=get&target=MotoRos_EDS.pdf) defines the reaction of the controller in response to a `trajectory_msgs\JointTrajectory` message. `The moto_ros_interface` program subscribes to a `trajector_msgs\JointTrajectory` message and interpolates between the position and velocity targets to provide smooth motion with linear acceleration approximations.
 
 ## Run a demo
 
 First boot up the gazebo simulation and MotoRos interface simulator
 ```
-roslaunch ma1400_sim gazebo.launch
+roslaunch ma1400_sim complete.gazebo.launch
 ```
-Then run the simple trajectory controller
+To send a simple sine wave trajectory to all the joints of the welding arm, run the following script:
 ```
 rosrun ma1400_sim trajectory_control.py
+```
+To rotate the positioner with a simple sine wave, run the following script:
+```
+rosrun ma1400_sim position_control.py
 ```
