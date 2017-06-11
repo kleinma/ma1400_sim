@@ -105,6 +105,8 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
                    + 6 * (vTarg.at(i) + vPre.at(i)) / pow(tTarg - tPre, 2);
       }
 
+      // Add epsilon to dt_ to avoid rounding errors. The code was running into
+      // issues with timesteps of ~1e-300 seconds.
       double epsilon = 0.0000001;
       while(t.at(t.size()-1) + dt_ + epsilon < tTarg) {
         // Increment the time
@@ -122,7 +124,7 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
 
           vInterp.at(i) = vPre.at(i)
                         + a1.at(i)*delT
-                        + a2.at(i)*(delT,2)/2.0;
+                        + a2.at(i)*pow(delT,2)/2.0;
         }
         x.push_back(xInterp);
         v.push_back(vInterp);
