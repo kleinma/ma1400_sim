@@ -56,25 +56,14 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
     }
 
   // Set initial tPre, xPre, vPre by subscribing to joint_states
-  // **TODO** Make sure joints are saved in correct order!!
   std::vector<double> xPre = currJointPos_;
   std::vector<double> vPre = currJointVel_;
-  xPre.at(0) = 0;
-  xPre.at(1) = 0;
-  xPre.at(2) = 0;
-  xPre.at(3) = 0;
-  xPre.at(4) = 0;
-  xPre.at(5) = 0;
-  vPre.at(0) = 0.2 * 2 * M_PI / 10.0;
-  vPre.at(1) = 0.2 * 2 * M_PI / 10.0;
-  vPre.at(2) = 0.2 * 2 * M_PI / 10.0;
-  vPre.at(3) = 0.2 * 2 * M_PI / 10.0;
-  vPre.at(4) = 0.2 * 2 * M_PI / 10.0;
-  vPre.at(5) = 0.2 * 2 * M_PI / 10.0;
   double tPre = 0;
   std::vector<double> xTarg, vTarg, a1, a2;
   a1.resize(6);
   a2.resize(6);
+  xTarg.resize(6);
+  vTarg.resize(6);
   double tTarg;
   // x and v are will be a 2d vector that stores each interpolated x and v
   // throughout the move from xPre to xTarg. The inner vector will span the
@@ -85,16 +74,19 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
   v.push_back(vPre);
   t.push_back(tPre);
 
-  // Iterate through each JointTrajectoryPoint
+  // Iterate through each JointTrajectoryPoint and add all the interpolated
+  // time, position, and velocity values to t, x, and v.
   for(std::vector<trajectory_msgs::JointTrajectoryPoint>::const_iterator it =
         msg->points.begin(); it != msg->points.end(); it++)
     {
       trajectory_msgs::JointTrajectoryPoint pnt;
       pnt = *it;
       tTarg = pnt.time_from_start.toSec();
-      // **TODO** Make sure joints are saved in correct order!!
-      xTarg = pnt.positions;
-      vTarg = pnt.velocities;
+      // Make sure joints are loaded in the correct order.
+      for (int i = 0; i < 6; ++i) {
+        xTarg.at(i) = pnt.positions[indicies[i]];
+        vTarg.at(i) = pnt.velocities[indicies[i]];
+      }
 
       // Find a1 and a2 for each joint
       for(int i=0; i<6; i++) {
@@ -141,31 +133,30 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
       vPre = vTarg;
     }
 
-  std::cout << "just printing all the ineterpolated points" << std::endl;
-  int j = 0;
-  for(std::vector<double>::const_iterator it = t.begin(); it != t.end(); it++)
-    {
-      std::cout << *it << ", " << x.at(j).at(0) << ", " << v.at(j).at(0) << std::endl;
-      // printf("%10.8f, %10.8f, %10.8f, %10.8f, %10.8f, %10.8f, %10.8f\n",*it, x.at(j).at(0),x.at(j).at(1),x.at(j).at(2),x.at(j).at(3),x.at(j).at(4),x.at(j).at(5));
-      j++;
+  // Iterate trhough all the iterpolated positions and send that command to the
+  // joint controllers.
+  for (int i = 0; i < t.size(); ++i ) {
+    if (i == 0) {
+      ros::Duration(t[0]).sleep();
     }
-
-  /*
-  // Command joints to position in pnt->positions[indicies[n]];
-  std_msgs::Float64 command;
-  command.data = pnt.positions[indicies[0]];
-  joint_sPub_.publish(command);
-  command.data = pnt.positions[indicies[1]];
-  joint_lPub_.publish(command);
-  command.data = pnt.positions[indicies[2]];
-  joint_uPub_.publish(command);
-  command.data = pnt.positions[indicies[3]];
-  joint_rPub_.publish(command);
-  command.data = pnt.positions[indicies[4]];
-  joint_bPub_.publish(command);
-  command.data = pnt.positions[indicies[5]];
-  joint_tPub_.publish(command);
-  */
+    else {
+      ros::Duration(t[i]-t[i-1]).sleep();
+    }
+    // Command joints to next positoin
+    std_msgs::Float64 command;
+    command.data = x.at(i).at(0);
+    joint_sPub_.publish(command);
+    command.data = x.at(i).at(1);
+    joint_lPub_.publish(command);
+    command.data = x.at(i).at(2);
+    joint_uPub_.publish(command);
+    command.data = x.at(i).at(3);
+    joint_rPub_.publish(command);
+    command.data = x.at(i).at(4);
+    joint_bPub_.publish(command);
+    command.data = x.at(i).at(5);
+    joint_tPub_.publish(command);
+  }
 }
 
 
