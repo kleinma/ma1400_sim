@@ -39,7 +39,8 @@ if __name__ == "__main__":
   while rospy.get_rostime() == timeZero:
     # Sleep for a small time to make sure publishing and subscribing works.
     rospy.sleep(rospy.Duration(1))
-
+  # Add additional sleep because ROS is dumb... (wasn't publishing)
+  rospy.sleep(rospy.Duration(5))
   # Create a JointTrajectory object
   traj = JointTrajectory()
   # traj.header.stamp = rospy.get_time()
@@ -57,15 +58,19 @@ if __name__ == "__main__":
   for i in xrange(N):
     point = JointTrajectoryPoint()
     positions = []
-    time_from_start = rospy.Duration.from_sec(time_range*i/float(N-1))
+    velocities = []
+    time_from_start = rospy.Duration.from_sec(time_range*(i+1)/float(N))
     point.time_from_start = time_from_start
-    position = angle_range*math.sin(2*math.pi*i/(N-1))
+    position = angle_range*math.sin(2*math.pi*(i+1)/float(N))
+    velocity = 2*math.pi/float(time_range)*angle_range*math.cos(2*math.pi*(i+1)/float(N))
     for j in xrange(6):
       positions.append(position)
+      velocities.append(velocity)
     point.positions = positions
+    point.velocities = velocities
     points.append(point)
-  traj.points= points
+  traj.points = points
 
-  rospy.loginfo(traj)
+  # rospy.loginfo(traj)
   trajPub.publish(traj)
   rospy.loginfo('published?')
