@@ -238,7 +238,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://ma1400_sim/meshes/ma1400/${name}_link.stl" />
+          <mesh filename="package://ma1400_sim/meshes/ma1400/${name}_link_collision.stl" />
         </geometry>
       </collision>
     </link>
