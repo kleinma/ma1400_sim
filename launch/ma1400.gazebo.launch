@@ -4,7 +4,7 @@
   <param name="robot_description"
     command="$(find xacro)/xacro --inorder '$(find ma1400_sim)/urdf/ma1400/ma1400.urdf.xacro'" />
 
-    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
     args="-urdf -model ma1400 -param robot_description"/>
 
@@ -29,6 +29,12 @@
   <!-- run the motoros interface simulator -->
   <node name="moto_ros_interface" pkg="ma1400_sim" type="moto_ros_interface"
         output="screen"/>
+
+  <!-- Set joints for joint_trajectory_action. URDF contains joint_tip, which is  not a controlled joint. -->
+  <rosparam param="controller_joint_names">['joint_base', 'joint_s', 'joint_l', 'joint_u', 'joint_r', 'joint_b', 'joint_t']</rosparam>
+
+  <!-- Bring up action server -->
+  <node pkg="industrial_robot_client" name="joint_trajectory_action" type="joint_trajectory_action" output="screen"/>
   
   <!-- Not sure what this does -->
   <node
