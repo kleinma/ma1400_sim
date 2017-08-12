@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   trajectory_msgs
   sensor_msgs
+  industrial_msgs
   controller_manager
 )
 
