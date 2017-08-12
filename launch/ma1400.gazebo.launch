@@ -31,10 +31,13 @@
         output="screen"/>
 
   <!-- Set joints for joint_trajectory_action. URDF contains joint_tip, which is  not a controlled joint. -->
-  <rosparam param="controller_joint_names">['joint_base', 'joint_s', 'joint_l', 'joint_u', 'joint_r', 'joint_b', 'joint_t']</rosparam>
+  <rosparam param="controller_joint_names">['joint_s', 'joint_l', 'joint_u', 'joint_r', 'joint_b', 'joint_t']</rosparam>
 
   <!-- Bring up action server -->
-  <node pkg="industrial_robot_client" name="joint_trajectory_action" type="joint_trajectory_action" output="screen"/>
+  <node pkg="industrial_robot_client" name="joint_trajectory_action" type="joint_trajectory_action" output="screen">
+    <!-- Set the goal_threshold in radians for each joint. Not sure what this value should be. -->
+    <param name="constraints/goal_threshold" type="double" value="1.0"/>
+  </node>
   
   <!-- Not sure what this does -->
   <node
