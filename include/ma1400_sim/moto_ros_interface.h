@@ -30,6 +30,8 @@ SOFTWARE.
 #include <ros/ros.h>
 #include <trajectory_msgs/JointTrajectory.h>
 #include <sensor_msgs/JointState.h>
+#include <control_msgs/FollowJointTrajectoryFeedback.h>
+#include <industrial_msgs/RobotStatus.h>
 
 #ifndef __MOTO_ROS_INTERFACE_H_INCLUDED__
 #define __MOTO_ROS_INTERFACE_H_INCLUDED__
@@ -45,6 +47,8 @@ class MotoRosNode {
   ros::Publisher joint_rPub_;
   ros::Publisher joint_bPub_;
   ros::Publisher joint_tPub_;
+  ros::Publisher trajFeedbackPub_;
+  ros::Publisher robotStatusPub_;
   ros::Subscriber trajSub_;
   ros::Subscriber jointSub_;
 
@@ -61,6 +65,10 @@ class MotoRosNode {
   std::vector<double> currJointVel_;
   // Don't receive trajectories until you've found out where the arm is
   bool firstJointStateReceived_;
+
+  // Feedback message containing current position, desired position, and error
+  control_msgs::FollowJointTrajectoryFeedback trajFeedback_;
+  industrial_msgs::RobotStatus robotStatus_;
 
  public:
   MotoRosNode();

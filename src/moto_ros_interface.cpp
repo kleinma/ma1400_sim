@@ -30,7 +30,9 @@ SOFTWARE.
 #include <ros/ros.h>
 #include <trajectory_msgs/JointTrajectory.h>
 #include <trajectory_msgs/JointTrajectoryPoint.h>
+#include <control_msgs/FollowJointTrajectoryFeedback.h>
 #include <sensor_msgs/JointState.h>
+#include <industrial_msgs/RobotStatus.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/String.h>
 #include "ma1400_sim/moto_ros_interface.h"
@@ -133,6 +135,10 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
       vPre = vTarg;
     }
 
+  // Set RobotStatus to moving
+  robotStatus_.in_motion.val = 1;
+  robotStatusPub_.publish(robotStatus_);
+
   // Iterate trhough all the iterpolated positions and send that command to the
   // joint controllers.
   for (int i = 0; i < t.size(); ++i ) {
@@ -142,7 +148,7 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
     else {
       ros::Duration(t[i]-t[i-1]).sleep();
     }
-    // Command joints to next positoin
+    // Command joints to next position
     std_msgs::Float64 command;
     command.data = x.at(i).at(0);
     joint_sPub_.publish(command);
@@ -157,6 +163,11 @@ void MotoRosNode::trajSubCB(const trajectory_msgs::JointTrajectory::ConstPtr& ms
     command.data = x.at(i).at(5);
     joint_tPub_.publish(command);
   }
+
+  // Set RobotStatus to not moving
+  robotStatus_.in_motion.val = 0;
+  robotStatusPub_.publish(robotStatus_);
+
 }
 
 
@@ -177,6 +188,9 @@ void MotoRosNode::jointSubCB(const sensor_msgs::JointState::ConstPtr& msg) {
       currJointVel_.at(j) = msg->position.at(ind);
       j++;
     }
+  trajFeedback_.actual.positions = currJointPos_;
+  trajFeedback_.actual.velocities = currJointVel_;
+  trajFeedbackPub_.publish(trajFeedback_);
 }
 
 
@@ -190,6 +204,8 @@ MotoRosNode::MotoRosNode(): private_nh_("~") {
   joint_rPub_ = public_nh_.advertise<std_msgs::Float64>("joint_r_controller/command",1);
   joint_bPub_ = public_nh_.advertise<std_msgs::Float64>("joint_b_controller/command",1);
   joint_tPub_ = public_nh_.advertise<std_msgs::Float64>("joint_t_controller/command",1);
+  trajFeedbackPub_ = public_nh_.advertise<control_msgs::FollowJointTrajectoryFeedback>("feedback_states",1);
+  robotStatusPub_ = public_nh_.advertise<industrial_msgs::RobotStatus>("robot_status",1);
 
   // Create a subscriber to receive the JointTrajectory message
   trajSub_ = public_nh_.subscribe("joint_path_command",10,&MotoRosNode::trajSubCB, this);
@@ -214,6 +230,8 @@ MotoRosNode::MotoRosNode(): private_nh_("~") {
   jointNamesStdOrder_.push_back("joint_b");
   jointNamesStdOrder_.push_back("joint_t");
 
+  trajFeedback_.joint_names = jointNamesStdOrder_;
+
   // Initilize with six entries (one for each joint
   currJointPos_.resize(6);
   currJointVel_.resize(6);
@@ -231,7 +249,8 @@ int main(int argc, char **argv) {
   // Create an MotoRosNode Object
   MotoRosNode motoRosNode;
   // And spin
-  ros::spin();
+  ros::MultiThreadedSpinner spinner(4);
+  spinner.spin();
 
   return 0;
 }
